@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DentalVision2000 | Your Family Dentist in Karachi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* GLOBAL RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; color: #222; background: #ffffff; line-height: 1.5; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --primary: #0a6cc4;
+      --primary-light: #e8f3fc;
+      --grey: #f5f5f5;
+      --dark: #0a2a43;
+      --spacing: 16px;
+      --radius: 8px;
+    }
+
+    /* TOP BAR */
+    .top-bar { background: var(--primary); color: #fff; font-size: 14px; padding: 6px 12px; display: flex; justify-content: space-between; }
+    @media(max-width:600px){ .top-bar { flex-direction: column; align-items: center; gap: 4px; } }
+
+    /* NAVBAR */
+    header { position: sticky; top: 0; z-index: 1000; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
+    .logo { font-size: 22px; font-weight: 700; color: var(--primary); }
+    .menu { display: flex; gap: 24px; }
+    .menu a { font-weight: 500; position: relative; padding-bottom: 4px; transition: 0.25s ease; }
+    .menu a:hover { color: var(--primary); }
+    .menu a:hover::after { content:""; position:absolute; left:0; bottom:0; width:100%; height:2px; background:var(--primary); border-radius:2px; }
+
+    /* DROPDOWN */
+    .dropdown { position: relative; }
+    .dropdown-content { position: absolute; top: 100%; left: 0; background: #fff; padding: 12px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: none; flex-direction: column; min-width: 240px; border: 1px solid #e4e4e4; animation: dropfade 0.25s ease; }
+    .dropdown-content a { padding: 10px; border-radius: var(--radius); transition: 0.2s; }
+    .dropdown-content a:hover { background: var(--primary-light); color: var(--primary); }
+    .dropdown:hover .dropdown-content { display: flex; }
+
+    /* MOBILE MENU */
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 4px; }
+    .hamburger span { width: 24px; height: 3px; background: var(--dark); border-radius: 2px; }
+
+    .mobile-panel { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.15); padding: 20px; display: flex; flex-direction: column; gap: 20px; transition: 0.3s ease; overflow-y: auto; padding-bottom: 80px; z-index: 1501; }
+    .mobile-panel.open { right: 0; }
+    .mobile-panel a, .mobile-parent { font-weight: 500; padding: 8px 0; border-bottom: 1px solid #eee; display: block; text-align: left; background: none; border-radius: 0; color: #222; }
+    .mobile-parent { border: none; width: 100%; cursor: pointer; }
+    .mobile-group { display: flex; flex-direction: column; gap: 6px; }
+    .mobile-submenu { max-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding-left: 10px; border-left: 2px solid var(--primary-light); transition: max-height 0.25s ease; }
+    .mobile-group.open .mobile-submenu { max-height: 500px; }
+
+    @media(max-width:768px){
+      .menu { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* HERO */
+    .hero { display: flex; flex-direction: column; padding: 40px 20px; gap: 30px; }
+    @media(min-width:900px){ .hero { flex-direction: row; align-items: center; padding: 60px 40px; } }
+
+    .hero-img { flex: 1; background: linear-gradient(120deg, #0a6cc4, #4aa3ff); aspect-ratio: 4/3; border-radius: var(--radius); }
+    .hero-text { flex: 1; display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.6s ease; }
+
+    .hero-text.animate { opacity: 1; transform: translateY(0); }
+
+    .hero-text h1 { font-size: 32px; font-weight: 700; color: var(--dark); }
+    .hero-text p { font-size: 16px; color: #444; }
+
+    .btn { padding: 12px 20px; border-radius: var(--radius); font-weight: 600; text-align: center; }
+    .btn-primary { background: var(--primary); color: #fff; transition: 0.25s ease; }
+    .btn-primary:hover { background: #084f91; }
+    .btn-secondary { border: 2px solid var(--primary); color: var(--primary); transition: 0.25s ease; }
+    .btn-secondary:hover { background: var(--primary); color: #fff; }
+
+    /* FEATURE CARDS */
+    .features { display: grid; gap: 20px; padding: 40px 20px; }
+    @media(min-width:900px){ .features { grid-template-columns: repeat(3,1fr); } }
+
+    .feature-card { position: relative; height: 220px; background: linear-gradient(120deg,#4aa3ff,#0a6cc4); border-radius: var(--radius); padding: 20px; color:#fff; display: flex; flex-direction: column; justify-content: flex-end; transition: 0.3s; }
+    .feature-card:hover { transform: translateY(-6px); }
+
+    /* HIGH-TECH */
+    .hightech { background: var(--primary-light); padding: 60px 20px; text-align: center; }
+    .hightech h2 { color: var(--dark); margin-bottom: 16px; }
+
+    /* DOCTORS */
+    .doctors { padding: 60px 20px; background: #f6f9ff; text-align: center; }
+    .doctors h2 { font-size: 26px; color: var(--dark); margin-bottom: 8px; }
+    .doctors p.section-subtitle { color: #555; max-width: 520px; margin: 0 auto 32px; font-size: 15px; }
+    .doctor-grid { display: grid; gap: 24px; max-width: 1100px; margin: 0 auto; align-items: stretch; }
+    @media(min-width:900px){ .doctor-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .doctor-card {
+  position: relative;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 8px 20px rgba(10,108,196,0.10);
+  transition: 0.25s ease;
+}
+.doctor-card::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
+}
+.doctor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(10,108,196,0.18);
+}
+    .doctor-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:48px; background: linear-gradient(120deg,#0a6cc4,#4aa3ff); opacity:0.2; }
+    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(10,108,196,0.12); border-color: #c2d9f5; }
+
+    .doctor-photo {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  background: url('https://via.placeholder.com/400x300') center/cover no-repeat;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+    .doctor-card h3 {
+  position: relative;
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 4px;
+  z-index: 2;
+}
+    .doctor-card p {
+  position: relative;
+  color: #eaeaea;
+  font-size: 14px;
+  margin-bottom: 10px;
+  z-index: 2;
+}
+    .doctor-card .btn { margin-top: 14px; padding-inline: 18px; font-size: 14px; }
+
+    /* SERVICES GRID */
+    .services { padding: 60px 20px; }
+    .services-grid { display: grid; gap: 20px; }
+    @media(min-width:900px){ .services-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .service-card { background: var(--grey); padding: 20px; border-radius: var(--radius); display:flex; flex-direction:column; gap:10px; }
+    .service-icon { width: 40px; height: 40px; border-radius:var(--radius); background: linear-gradient(120deg,#0a6cc4,#4aa3ff); }
+
+    /* REVIEWS */
+    .reviews { padding: 60px 20px; }
+    .review-card { background: var(--grey); padding:20px; border-radius:var(--radius); }
+
+    /* LOCATION */
+    .location-section { padding:60px 20px; background:#ffffff; }
+    .location-inner { max-width:1100px; margin:0 auto; display:grid; gap:24px; align-items:stretch; }
+    @media(min-width:900px){ .location-inner { grid-template-columns: minmax(0,1.1fr) minmax(0,1.2fr); } }
+    .location-text { display:flex; flex-direction:column; gap:10px; }
+    .location-text h2 { font-size:24px; color:var(--dark); }
+    .location-text p { font-size:14px; color:#555; }
+    .location-text .location-desc { max-width:460px; }
+    .location-text .location-name { font-weight:500; }
+    .location-text .location-hours { font-size:14px; }
+    .location-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .location-map-wrapper { border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(10,108,196,0.18); min-height:260px; }
+    .location-map-inner { position:relative; width:100%; padding-top:60%; }
+    .location-map-inner iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+    /* FAQ */
+    .faq { padding:60px 20px; background:#f6f9ff; }
+    .faq-inner { max-width: 900px; margin: 0 auto; }
+    .faq h2 { text-align:center; color:var(--dark); margin-bottom:8px; }
+    .faq-desc { text-align:center; color:#555; margin-bottom:24px; font-size:15px; }
+    .faq-item { background:#fff; border-radius:12px; padding:16px 18px; margin-bottom:12px; box-shadow:0 4px 10px rgba(10,108,196,0.04); border:1px solid #e3edf8; cursor:pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+    .faq-item:hover { border-color:#c4d8f3; box-shadow:0 6px 14px rgba(10,108,196,0.08); transform: translateY(-2px); }
+    .faq-header { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+    .faq-question { flex:1; font-weight:500; color:var(--dark); font-size:15px; }
+    .faq-icon { flex-shrink:0; width:24px; height:24px; border-radius:50%; border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:16px; line-height:1; color:var(--primary); transition: 0.25s ease; }
+    .faq-item.open .faq-icon { background:var(--primary); color:#fff; transform: rotate(45deg); }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease; font-size:14px; color:#555; padding-left:36px; }
+    .faq-item.open .faq-answer { margin-top:8px; }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: #fff; padding: 40px 20px; }
+    .footer-grid { display:grid; gap:24px; }
+    @media(min-width:900px){ .footer-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .footer-column h4 { margin-bottom: 12px; }
+
+    .footer-bottom { text-align:center; margin-top:20px; font-size:14px; }
+
+    /* WHATSAPP FLOAT */
+    .wa-float { position:fixed; bottom:20px; right:20px; width:56px; height:56px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1200; transition:0.25s ease; box-shadow:0 4px 10px rgba(0,0,0,0.15); }
+    .wa-float:hover { transform: translateY(-4px) scale(1.08); box-shadow:0 8px 18px rgba(0,0,0,0.22); background:#1ebe5d; }
+    .wa-float svg { width:28px; fill:#fff; }
+  @keyframes dropfade { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</div>
+  <a href="tel:03212073839">Call: 0321-2073839</a>
+</div>
+
+<header>
+  <nav class="nav">
+    <div class="logo">DentalVision2000</div>
+    <div class="menu">
+      <a href="#">Home</a>
+      <a href="doctors.html">Meet the Doctors</a>
+      <div class="dropdown">
+        <a href="Services-page-dentalvision2000.html">Services</a>
+        <div class="dropdown-content">
+          <a href="root-canal.html">Root Canal Treatment</a>
+          <a href="implants.html">Dental Implants</a>
+          <a href="invisible-aligners.html">Invisible Aligners</a>
+          <a href="scaling.html">Scaling & Polishing</a>
+          <a href="whitening.html">Teeth Whitening</a>
+          <a href="fillings.html">Dental Fillings</a>
+          <a href="crowns.html">Crowns & Bridges</a>
+          <a href="gum.html">Gum Treatment</a>
+          <a href="full-mouth.html">Full Mouth Rehabilitation</a>
+          <a href="emergency.html">Emergency Dental Care</a>
+          <a href="pediatric.html">Pediatric Dentistry</a>
+        </div>
+      </div>
+      <a href="consultation.html">Consultation</a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#">Home</a>
+  <a href="doctors.html">Meet the Doctors</a>
+  <div class="mobile-group">
+    <button type="button" class="mobile-parent">Services ▾</button>
+    <div class="mobile-submenu">
+      <a href="root-canal.html">Root Canal Treatment</a>
+      <a href="implants.html">Dental Implants</a>
+      <a href="invisible-aligners.html">Invisible Aligners</a>
+      <a href="scaling.html">Scaling &amp; Polishing</a>
+      <a href="whitening.html">Teeth Whitening</a>
+      <a href="fillings.html">Dental Fillings</a>
+      <a href="crowns.html">Crowns &amp; Bridges</a>
+      <a href="gum.html">Gum Treatment</a>
+      <a href="full-mouth.html">Full Mouth Rehabilitation</a>
+      <a href="emergency.html">Emergency Dental Care</a>
+      <a href="pediatric.html">Pediatric Dentistry</a>
+    </div>
+  </div>
+  <a href="consultation.html">Consultation</a>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-text" id="heroText">
+      <small style="color:var(--primary);font-weight:700;">Family-Friendly Dental Clinic in Karachi</small>
+      <h1>Safe, Comfortable & Affordable Dental Care</h1>
+      <p>Your family’s trusted dental clinic for check-ups, emergencies and smile makeovers.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Schedule Appointment on WhatsApp</a>
+        <a href="consultation.html" class="btn btn-secondary">Online Consultation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <a class="feature-card" href="root-canal.html">
+      <div><strong>Root Canal Treatment</strong><br><small>Microscope-assisted precision for lasting relief</small><br>Learn more →</div>
+    </a>
+    <a class="feature-card" href="implants.html">
+      <div><strong>Dental Implants</strong><br><small>Natural-looking, stable replacements</small><br>Learn more →</div>
+    </a>
+    <a class="feature-card" href="invisible-aligners.html">
+      <div><strong>Invisible Aligners</strong><br><small>Clear trays for straighter teeth</small><br>Learn more →</div>
+    </a>
+  </section>
+
+  <!-- HIGH TECH -->
+  <section class="hightech">
+    <h2>Modern Care, Simple Approach</h2>
+    <p>At DentalVision2000, we use digital x-rays, high‑quality materials and strict sterilization — all while keeping treatments simple, clear and affordable for every family.</p>
+  </section>
+
+  <!-- DOCTORS -->
+  <section class="doctors">
+    <h2>Meet the Doctors</h2><br>
+    <div class="doctor-grid">
+      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
+        
+        <h3>Dr. Furqan Ahmed</h3>
+        <p>Founder & Senior Dentist</p>
+        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-furqan.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+      </div>
+
+      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
+        
+        <h3>Dr. Uzma Shaheen</h3>
+        <p>General Dentist</p>
+        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-uzma.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+      </div>
+
+      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
+        
+        <h3>Dr. Fateh</h3>
+        <p>General Dentist</p>
+        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-fateh.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES GRID -->
+  <section class="services">
+    <h2>Treatments We Offer</h2><br>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon"></div><strong>Root Canal Treatment</strong><p>Precision cleaning, pain-free relief.</p><a href="root-canal.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Dental Implants</strong><p>Strong, natural-looking teeth.</p><a href="implants.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Invisible Aligners</strong><p>Clear and removable trays.</p><a href="invisible-aligners.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Scaling & Polishing</strong><p>Deep cleaning for fresh smiles.</p><a href="scaling.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Teeth Whitening</strong><p>Instant brightness boost.</p><a href="whitening.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Dental Fillings</strong><p>Fix cavities quickly.</p><a href="fillings.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Crowns & Bridges</strong><p>Restore teeth strength.</p><a href="crowns.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Gum Treatment</strong><p>Healthy gums, healthy smile.</p><a href="gum.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Full Mouth Rehabilitation</strong><p>Total dental restoration.</p><a href="full-mouth.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Emergency Dental Care</strong><p>Fast help for urgent cases.</p><a href="emergency.html">Learn more →</a></div>
+      <div class="service-card"><div class="service-icon"></div><strong>Pediatric Dentistry</strong><p>Gentle care for children.</p><a href="pediatric.html">Learn more →</a></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <h2>What Our Patients Say</h2><br>
+    <!-- TODO: Replace with actual Google Reviews embed -->
+    <div class="review-card"><strong>★★★★★ — Ali</strong><p>Very professional and friendly staff. Highly recommended!</p><a href="#">View on Google →</a></div><br>
+    <div class="review-card"><strong>★★★★☆ — Sara</strong><p>The treatment was smooth and painless. Clean clinic environment.</p><a href="#">View on Google →</a></div><br>
+  </section>
+
+  <!-- LOCATION / MAP -->
+  <section class="location-section">
+    <div class="location-inner">
+      <div class="location-text">
+        <h2>Visit Our Clinic</h2>
+        <p class="location-desc">We are located in the heart of Federal B Area, with easy access and parking nearby. You can use the map to get directions directly to our clinic.</p>
+        <p class="location-name">DentalVision2000</p>
+        <p class="location-address">Plot R 1233, Federal B Area Block 15,<br>Gulberg Town, Karachi</p>
+        <p class="location-hours">Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</p>
+        <div class="location-actions">
+          <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
+          <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" target="_blank" class="btn btn-secondary">Open in Google Maps</a>
+        </div>
+      </div>
+      <div class="location-map-wrapper">
+        <div class="location-map-inner">
+          <!-- Embedded Google Map -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-inner">
+      <h2>Frequently Asked Questions</h2>
+      <p class="faq-desc">Quick answers to the questions patients ask us most often.</p><br>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span class="faq-question">Do I need an appointment or can I walk in?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Appointments are recommended so we can reserve your slot, but walk-ins are accepted based on availability.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span class="faq-question">Is treatment painful?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Most treatments are very comfortable. We use modern anesthetics and gentle techniques to keep you relaxed.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span class="faq-question">Do you treat children?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, we offer pediatric dentistry. Our team is used to treating children in a calm, friendly way.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span class="faq-question">How can I book an appointment?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>You can message us on WhatsApp, call the clinic during service hours, or visit in person to book your slot.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header">
+          <span class="faq-question">What if I have a dental emergency?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>For emergencies, contact us on WhatsApp or call immediately. We will guide you and try to see you as soon as possible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-column">
+      <h4>DentalVision2000</h4>
+      <p>Plot R 1233, Federal B Area Block 15, Gulberg Town, Karachi</p><br>
+      <a href="tel:03212073839" style="color:#fff;">0321-2073839</a><br><br>
+      <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" style="color:#fff;" target="_blank">Open in Google Maps</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>Services</h4>
+      <p><a href="root-canal.html">Root Canal</a></p>
+      <p><a href="implants.html">Dental Implants</a></p>
+      <p><a href="invisible-aligners.html">Invisible Aligners</a></p>
+      <p><a href="scaling.html">Scaling</a></p>
+      <p><a href="whitening.html">Whitening</a></p>
+      <p><a href="fillings.html">Fillings</a></p>
+      <p><a href="crowns.html">Crowns & Bridges</a></p>
+      <p><a href="gum.html">Gum Treatment</a></p>
+      <p><a href="full-mouth.html">Full Mouth Rehab</a></p>
+      <p><a href="emergency.html">Emergency Care</a></p>
+      <p><a href="pediatric.html">Pediatric Dentistry</a></p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Service Hours</h4>
+      <p>Mon–Fri: 11:00 AM – 9:00 PM</p>
+      <p><strong>Sunday: CLOSED</strong></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© DentalVision2000. All rights reserved.</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/923212073839" target="_blank" class="wa-float">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.5.8 4.9 2.1 6.9L4 29l7.3-2c1.9 1 4 1.6 6.6 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm6.7 17.5c-.3.9-1.7 1.7-2.4 1.8-.6.1-1.4.1-2.3-.1-.5-.1-1.2-.4-2-0.8-3.5-1.9-5.8-5.4-6-5.7-.2-.3-1.4-1.9-1.4-3.6 0-1.7.9-2.5 1.3-2.9.3-.3.7-.4 1-.4h.7c.2 0 .6-.1.9.7.3.9 1.1 2.9 1.2 3.1.1.2.1.4 0 .6-.1.3-.2.4-.4.6-.2.2-.5.6-.7.8-.2.2-.5.5-.2 1 0.3.5 1.3 2.2 2.9 3.5 2 1.8 3.6 2.4 4.2 2.7.6.3.9.2 1.2-.1.4-.5 1-1.3 1.3-1.7.3-.4.6-.4.9-.3s2.3 1.1 2.7 1.3c.4.2.7.3.8.5.1.2.1 1-.2 1.9z"/></svg>
+</a>
+
+<script>
+// MOBILE MENU
+const hamburger = document.getElementById('hamburger');
+const panel = document.getElementById('mobilePanel');
+if (hamburger && panel) {
+  hamburger.addEventListener('click', () => panel.classList.toggle('open'));
+  panel.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => panel.classList.remove('open'))
+  );
+  const mobileServiceGroup = panel.querySelector('.mobile-group');
+  const mobileParent = panel.querySelector('.mobile-parent');
+  if (mobileParent && mobileServiceGroup) {
+    mobileParent.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileServiceGroup.classList.toggle('open');
+    });
+  }
+}
+
+// HERO ANIMATION
+const heroText = document.getElementById('heroText');
+const observer = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting) heroText.classList.add('animate');
+},{threshold:0.3});
+observer.observe(heroText);
+
+// FAQ ACCORDION
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+
+    faqItems.forEach(i => {
+      i.classList.remove('open');
+      const answerEl = i.querySelector('.faq-answer');
+      if (answerEl) answerEl.style.maxHeight = null;
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      const answer = item.querySelector('.faq-answer');
+      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+
+</body>
+</html>

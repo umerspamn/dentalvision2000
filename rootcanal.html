@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><!-- SERVICE_NAME -->Root Canal Treatment | DentalVision2000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0b7bbf;
+      --primary-dark: #075580;
+      --primary-light: #e6f3fb;
+      --bg: #f5f7fb;
+      --text-main: #1d2939;
+      --text-muted: #667085;
+      --border-subtle: #d0d5dd;
+      --whatsapp: #25d366;
+      --shadow-soft: 0 18px 35px rgba(15, 23, 42, 0.12);
+      --radius-lg: 18px;
+      --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin: 0 auto;
+    }
+
+    /* Top bar (same pattern across site) */
+    .top-bar {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    .top-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      gap: 0.5rem;
+    }
+
+    .top-bar a {
+      color: #e5e7eb;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 0;
+      gap: 1.25rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.06em;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 123, 191, 0.18);
+      background: radial-gradient(circle at top left, rgba(11, 123, 191, 0.14), transparent 60%), #ffffff;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: #475467;
+      font-weight: 500;
+      position: relative;
+      padding: 0.25rem 0;
+      transition: color 0.18s ease-out;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -0.35rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--primary);
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-link:hover::after {
+      width: 70%;
+    }
+
+    .nav-link.active {
+      color: var(--primary-dark);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 123, 191, 0.35);
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #ffffff;
+      background: linear-gradient(135deg, #0b7bbf, #0ea5e9);
+      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.35);
+      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .hamburger span {
+      width: 20px;
+      height: 2px;
+      background: #111827;
+      border-radius: 999px;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      z-index: 40;
+    }
+
+    .mobile-menu-panel {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: min(260px, 80%);
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -20px 0 45px rgba(15, 23, 42, 0.4);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-close {
+      border: none;
+      background: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #111827;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 1rem;
+      font-size: 0.98rem;
+    }
+
+    .mobile-links a {
+      color: #111827;
+      font-weight: 500;
+    }
+
+    main {
+      padding-bottom: 4.5rem; /* space for mobile sticky bar */
+    }
+
+    /* hero */
+    .hero {
+      padding: 2.8rem 0 2.4rem;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2.2rem;
+      align-items: center;
+      background: radial-gradient(circle at top left, rgba(11, 123, 191, 0.16), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 60%),
+                  #ffffff;
+      border-radius: 26px;
+      padding: 2.5rem 2.3rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-tag {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #64748b;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.45rem);
+      line-height: 1.12;
+      margin-bottom: 0.45rem;
+      color: #0f172a;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-location {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 999px;
+      background: var(--whatsapp);
+      color: #ffffff;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35);
+    }
+
+    .hero-cta-primary span.icon {
+      font-size: 1.15rem;
+    }
+
+    .hero-note {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .hero-media {
+      position: relative;
+      min-height: 220px;
+      border-radius: 24px;
+      background: radial-gradient(circle at 0% 0%, #e0f2fe 0, #bfdbfe 24%, #0b7bbf 90%);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1.5rem;
+      color: #f9fafb;
+    }
+
+    .hero-media-inner {
+      text-align: center;
+    }
+
+    .hero-media-label {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.95;
+    }
+
+    .hero-media-placeholder {
+      margin-top: 0.8rem;
+      width: 160px;
+      height: 190px;
+      border-radius: 22px;
+      border: 1px dashed rgba(241, 245, 249, 0.8);
+      background: rgba(15, 23, 42, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      padding: 0.75rem;
+    }
+
+    .hero-media-placeholder span.icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* generic section styling */
+    .section {
+      padding: 2.4rem 0;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+      color: #0f172a;
+    }
+
+    .section-intro {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      max-width: 720px;
+    }
+
+    .section + .section {
+      border-top: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    /* description */
+    .description-body p + p {
+      margin-top: 0.8rem;
+    }
+
+    /* symptoms */
+    .symptoms-list {
+      margin-top: 0.4rem;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: #111827;
+    }
+
+    .symptoms-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* diagnosis */
+    .diagnosis-text {
+      margin-top: 0.3rem;
+      font-size: 0.96rem;
+      color: #111827;
+    }
+
+    /* treatment steps */
+    .steps-list {
+      margin-top: 0.5rem;
+      padding-left: 1.1rem;
+      font-size: 0.95rem;
+      color: #111827;
+    }
+
+    .steps-list li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* benefits */
+    .benefits-list {
+      margin-top: 0.4rem;
+      padding-left: 1.15rem;
+      font-size: 0.95rem;
+      color: #111827;
+    }
+
+    .benefits-list li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* before/after section */
+    .before-after-grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .before-after-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1rem;
+      border: 1px dashed var(--border-subtle);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .before-after-label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #0f172a;
+    }
+
+    .before-after-note {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ accordion */
+    .faq-list {
+      margin-top: 1rem;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: #ffffff;
+    }
+
+    .faq-item + .faq-item {
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.98rem;
+      cursor: pointer;
+      color: #0f172a;
+    }
+
+    .faq-question span.label {
+      flex: 1;
+      padding-right: 0.75rem;
+    }
+
+    .faq-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+
+    .faq-answer {
+      padding: 0 1.1rem 0.85rem 1.1rem;
+      font-size: 0.92rem;
+      color: #4b5563;
+      display: none;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item.open .faq-icon {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: #0f172a;
+    }
+
+    /* WhatsApp CTA section */
+    .cta-section {
+      padding: 2.6rem 0 1.8rem;
+    }
+
+    .cta-box {
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(11, 123, 191, 0.1), rgba(37, 211, 102, 0.14));
+      padding: 1.8rem 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.3rem;
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.16);
+    }
+
+    .cta-text h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+      color: #0f172a;
+    }
+
+    .cta-text p {
+      font-size: 0.95rem;
+      color: #111827;
+    }
+
+    .cta-button-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      background: #22c55e;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 500;
+      box-shadow: 0 14px 32px rgba(34, 197, 94, 0.5);
+      white-space: nowrap;
+    }
+
+    .cta-button-main span.icon {
+      font-size: 1.2rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 2.75rem 0 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: #9ca3af;
+    }
+
+    .footer-list li + li {
+      margin-top: 0.25rem;
+    }
+
+    .footer-list a:hover {
+      color: #e5e7eb;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      padding-top: 0.9rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Floating WhatsApp FAB (desktop / tablet) */
+    .whatsapp-float {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 60;
+    }
+
+    .whatsapp-fab {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: none;
+      background: #25d366;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .whatsapp-fab span {
+      font-size: 1.6rem;
+    }
+
+    /* Mobile sticky bottom bar */
+    .mobile-whatsapp-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #022c22;
+      padding: 0.55rem 0 0.75rem;
+      display: none; /* shown via media query */
+      z-index: 55;
+      box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.6);
+    }
+
+    .mobile-whatsapp-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .mobile-whatsapp-text {
+      font-size: 0.82rem;
+      color: #e5e7eb;
+    }
+
+    .mobile-whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      background: #22c55e;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .mobile-whatsapp-btn span.icon {
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-media {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-inner {
+        padding: 2rem 1.4rem;
+      }
+
+      .cta-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .whatsapp-float {
+        display: none; /* hide FAB on mobile, show sticky bar instead */
+      }
+
+      .mobile-whatsapp-bar {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar (shared across pages) -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span>Service Hours: Mon–Sat 11:00 AM – 9:00 PM · Sunday Closed</span>
+      <a href="tel:+923212073839">Call: 0321-2073839</a>
+    </div>
+  </div>
+
+  <!-- Header & Navbar -->
+  <header>
+    <div class="container nav-inner">
+      <div class="logo">DentalVision2000</div>
+      <nav aria-label="Main navigation">
+        <div class="nav-links">
+          <!-- Navigation links: update hrefs to your actual files -->
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="doctors.html" class="nav-link">Meet the Doctors</a>
+          <a href="services.html" class="nav-link">Services</a>
+          <a href="consultation.html" class="nav-link">Consultation</a>
+        </div>
+        <a href="https://wa.me/923212073839" target="_blank" rel="noopener" class="nav-cta">
+          <span>Book on WhatsApp</span>
+        </a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-panel">
+      <div class="mobile-menu-header">
+        <div class="logo">DentalVision2000</div>
+        <button class="mobile-close" id="mobileClose" aria-label="Close navigation menu">&times;</button>
+      </div>
+      <div class="mobile-links">
+        <!-- Navigation links: update hrefs to your actual files -->
+        <a href="index.html">Home</a>
+        <a href="doctors.html">Meet the Doctors</a>
+        <a href="services.html">Services</a>
+        <a href="consultation.html">Consultation</a>
+        <a href="https://wa.me/923212073839" target="_blank" rel="noopener">Book on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO: left text, right placeholder image block -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <p class="hero-tag">Dental treatment</p>
+            <h1 class="hero-title"><!-- SERVICE_NAME -->Root Canal Treatment</h1>
+            <p class="hero-subtitle"><!-- SHORT_TAGLINE -->Pain-free treatment to save your natural tooth.</p>
+            <p class="hero-location">Offered at DentalVision2000, Federal B Area – Karachi.</p>
+            <a href="https://wa.me/923212073839" target="_blank" rel="noopener" class="hero-cta-primary">
+              <span class="icon">💬</span>
+              <span>Book on WhatsApp</span>
+            </a>
+            <p class="hero-note">Send us a short message about your problem. Our team will reply with the next best step.</p>
+          </div>
+          <div class="hero-media">
+            <div class="hero-media-inner">
+              <p class="hero-media-label">Service image placeholder</p>
+              <div class="hero-media-placeholder">
+                <span class="icon">🦷</span>
+                <span style="font-weight:500;">Add a photo for</span>
+                <span style="font-size:0.85rem; opacity:0.9;">"<!-- SERVICE_NAME -->Root Canal Treatment" here later.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESCRIPTION SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">What is <!-- SERVICE_NAME -->Root Canal Treatment?</h2>
+        <div class="section-intro description-body">
+          <!-- DESCRIPTION_PARAGRAPHS: replace these sample paragraphs with your own text -->
+          <p>
+            A root canal treatment is a way to save a tooth that is badly infected or very painful,
+            instead of removing it. The inside of the tooth is gently cleaned, disinfected and sealed
+            so that the pain and infection do not return.
+          </p>
+          <p>
+            At DentalVision2000, we focus on comfort. The area is numbed properly first, and the
+            dentist works step by step while explaining what they are doing in simple language.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYMPTOMS SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">When do you need this treatment?</h2>
+        <!-- SYMPTOMS_LIST: edit or replace these bullet points -->
+        <ul class="symptoms-list">
+          <li>Strong, lasting toothache, especially at night.</li>
+          <li>Pain when chewing or biting on a tooth.</li>
+          <li>Tooth feels very sensitive to hot or cold drinks.</li>
+          <li>Swelling or a small pimple near the tooth on the gums.</li>
+          <li>A tooth that has turned darker in colour after an injury.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- DIAGNOSIS SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">How we diagnose your case</h2>
+        <!-- DIAGNOSIS_TEXT: edit this paragraph as needed -->
+        <p class="diagnosis-text">
+          First, the dentist listens to your complaint and checks your teeth and gums.
+          We may take an X-ray of the tooth to see the roots and the infection clearly.
+          After this, the dentist explains the condition, all possible options and the
+          expected cost before starting any treatment.
+        </p>
+      </div>
+    </section>
+
+    <!-- TREATMENT STEPS SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">How the treatment works</h2>
+        <!-- TREATMENT_STEPS_LIST: replace these steps for each service -->
+        <ol class="steps-list">
+          <li>We numb the tooth and surrounding area so you stay comfortable.</li>
+          <li>A small opening is made on the tooth to reach the infected nerve.</li>
+          <li>The inside is cleaned and shaped carefully, then rinsed with special solutions.</li>
+          <li>The cleaned space is filled and sealed, and the tooth is later covered with a filling or crown.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Benefits of <!-- SERVICE_NAME -->Root Canal Treatment</h2>
+        <!-- BENEFITS_LIST: edit these benefits based on the service -->
+        <ul class="benefits-list">
+          <li>Relieves strong tooth pain and infection.</li>
+          <li>Helps you keep your own natural tooth for many years.</li>
+          <li>Allows normal chewing on that side again.</li>
+          <li>Prevents the infection from spreading to nearby teeth or jaw.</li>
+          <li>Usually more affordable than removing the tooth and replacing it later.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BEFORE & AFTER SECTION -->
+    <!-- BEFORE_AFTER_VISIBLE: keep this section ONLY for RCT, implants, aligners, scaling & polishing,
+         teeth whitening, smile makeover and other cosmetic/visible treatments. Delete for other services. -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Before &amp; After (Sample Cases)</h2>
+        <p class="section-intro">Replace these boxes later with real photos to show patients how treatment can improve their smile and comfort.</p>
+        <div class="before-after-grid">
+          <div class="before-after-card">
+            <div class="before-after-label">Before</div>
+            <p class="before-after-note">Placeholder for pre-treatment photo with decay, infection or damaged tooth.</p>
+          </div>
+          <div class="before-after-card">
+            <div class="before-after-label">After</div>
+            <p class="before-after-note">Placeholder for post-treatment photo showing a healthy, restored tooth.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <!-- FAQ_ITEMS: you can edit the questions and answers inside each .faq-item -->
+        <div class="faq-list" id="faqList">
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span class="label">Is the treatment painful?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              We use strong local anaesthesia to numb the tooth first, so most patients feel
+              pressure but not sharp pain. If you feel anything uncomfortable, the dentist can
+              stop and give more numbing.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span class="label">How long does the treatment take?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Simple cases may be finished in one visit of about 60–90 minutes. More complex
+              teeth sometimes need 2 visits so we can clean the infection properly and give
+              you the best result.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span class="label">Will my tooth be weak after a root canal?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              After treatment, the tooth can become a bit more brittle. That’s why we usually
+              recommend a crown (cap) for back teeth so you can chew safely without cracking the tooth.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false">
+              <span class="label">Will my insurance cover this treatment?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Coverage depends on your specific insurance plan. We can provide a treatment
+              note and bill so you can check with your insurance provider about reimbursement.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHATSAPP CTA SECTION (highly optimized) -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-text">
+            <h3>Ready to discuss your case?</h3>
+            <p>
+              Send us your name, age and a short description of your problem. If you have any
+              reports or X-rays, you can share photos on WhatsApp and our team will guide you
+              on the next steps.
+            </p>
+          </div>
+          <div>
+            <button class="cta-button-main" id="ctaWhatsappBtn">
+              <span class="icon">💬</span>
+              <span>Chat with the Clinic on WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4 class="footer-title">Contact</h4>
+          <ul class="footer-list">
+            <li>DentalVision2000</li>
+            <li>Plot R 1233, Federal B Area Block 15</li>
+            <li>Gulberg Town, Karachi</li>
+            <li><a href="tel:+923212073839">Phone: 0321-2073839</a></li>
+            <li><a href="#">Open in Google Maps</a> <!-- replace with real map link --></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-list">
+            <!-- Optional: link back to key treatments -->
+            <li><a href="service-root-canal.html">Root Canal Treatment</a></li>
+            <li><a href="service-implants.html">Dental Implants</a></li>
+            <li><a href="service-invisible-aligners.html">Invisible Aligners</a></li>
+            <li><a href="services.html">View all services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Service Hours</h4>
+          <ul class="footer-list">
+            <li>Monday – Saturday: 11:00 AM – 9:00 PM</li>
+            <li>Sunday: CLOSED</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© DentalVision2000. All rights reserved.</span>
+        <span>Information on this page is for patient education and does not replace a full check-up.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp button (desktop / tablet) -->
+  <div class="whatsapp-float">
+    <button class="whatsapp-fab" id="whatsappFab" aria-label="Chat on WhatsApp">
+      <span>💬</span>
+    </button>
+  </div>
+
+  <!-- Mobile sticky WhatsApp bar (visible on small screens) -->
+  <div class="mobile-whatsapp-bar" id="mobileWhatsappBar">
+    <div class="container mobile-whatsapp-inner">
+      <div class="mobile-whatsapp-text">
+        Book your <!-- SERVICE_NAME -->root canal consultation on WhatsApp.
+      </div>
+      <button class="mobile-whatsapp-btn" id="mobileWhatsappBtn">
+        <span class="icon">💬</span>
+        <span>Book now</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const WHATSAPP_URL = 'https://wa.me/923212073839';
+
+      function openWhatsapp() {
+        window.open(WHATSAPP_URL, '_blank', 'noopener');
+      }
+
+      // --- Mobile nav toggle ---
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileClose = document.getElementById('mobileClose');
+
+      function openMobileMenu() {
+        if (!mobileMenu || !hamburger) return;
+        mobileMenu.style.display = 'block';
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        hamburger.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeMobileMenu() {
+        if (!mobileMenu || !hamburger) return;
+        mobileMenu.style.display = 'none';
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+
+      if (hamburger) hamburger.addEventListener('click', openMobileMenu);
+      if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+      if (mobileMenu) {
+        mobileMenu.addEventListener('click', (e) => {
+          if (e.target === mobileMenu) closeMobileMenu();
+        });
+      }
+
+      // --- WhatsApp buttons ---
+      const whatsappFab = document.getElementById('whatsappFab');
+      const ctaWhatsappBtn = document.getElementById('ctaWhatsappBtn');
+      const mobileWhatsappBtn = document.getElementById('mobileWhatsappBtn');
+
+      if (whatsappFab) whatsappFab.addEventListener('click', openWhatsapp);
+      if (ctaWhatsappBtn) ctaWhatsappBtn.addEventListener('click', openWhatsapp);
+      if (mobileWhatsappBtn) mobileWhatsappBtn.addEventListener('click', openWhatsapp);
+
+      // --- FAQ accordion logic ---
+      const faqList = document.getElementById('faqList');
+
+      if (faqList) {
+        faqList.addEventListener('click', (event) => {
+          const btn = event.target.closest('.faq-question');
+          if (!btn) return;
+
+          const item = btn.parentElement;
+          const isOpen = item.classList.contains('open');
+
+          // close all others
+          faqList.querySelectorAll('.faq-item').forEach((el) => {
+            el.classList.remove('open');
+            const q = el.querySelector('.faq-question');
+            if (q) q.setAttribute('aria-expanded', 'false');
+          });
+
+          // toggle current
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          } else {
+            item.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      // --- Simple smoke / unit-style tests ---
+      function runSmokeTests() {
+        const results = [];
+
+        function check(name, condition) {
+          results.push({ test: name, status: condition ? 'PASS' : 'FAIL' });
+        }
+
+        check('Navbar exists', !!document.querySelector('header nav'));
+        check('FAQ list exists', !!faqList);
+        check('WhatsApp CTA button exists', !!ctaWhatsappBtn);
+        check('Desktop WhatsApp FAB exists', !!whatsappFab);
+        check('Mobile WhatsApp bar exists', !!document.getElementById('mobileWhatsappBar'));
+
+        console.table(results);
+        const failed = results.filter(r => r.status === 'FAIL');
+        if (failed.length) {
+          console.warn('Some smoke tests FAILED. Check elements above.');
+        } else {
+          console.info('All smoke tests PASSED for service detail page.');
+        }
+      }
+
+      // Run tests once on load.
+      runSmokeTests();
+    });
+  </script>
+</body>
+</html>

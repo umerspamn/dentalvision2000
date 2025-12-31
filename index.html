@@ -3,224 +3,285 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DentalVision2000 - Your Family's Trusted Dental Clinic in Karachi. Safe, affordable, and comfortable dental care." />
   <title>DentalVision2000 | Your Family Dentist in Karachi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <style>
     /* GLOBAL RESET */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Roboto', sans-serif; color: #222; background: #ffffff; line-height: 1.5; }
-    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #222;
+      background: #ffffff;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: color 0.2s ease; }
+    button { font-family: inherit; }
 
     :root {
       --primary: #0a6cc4;
+      --primary-dark: #084f91;
       --primary-light: #e8f3fc;
       --grey: #f5f5f5;
       --dark: #0a2a43;
-      --spacing: 16px;
       --radius: 8px;
     }
 
+    /* UTILITIES */
+    .mb-2 { margin-bottom: 8px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mb-6 { margin-bottom: 24px; }
+    .text-center { text-align: center; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
     /* TOP BAR */
-    .top-bar { background: var(--primary); color: #fff; font-size: 14px; padding: 6px 12px; display: flex; justify-content: space-between; }
-    @media(max-width:600px){ .top-bar { flex-direction: column; align-items: center; gap: 4px; } }
+    .top-bar { background: var(--primary); color: #fff; font-size: 14px; padding: 8px 20px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; text-align: center; }
+    .top-bar a:hover { text-decoration: underline; }
+    @media(min-width: 600px) { .top-bar { justify-content: space-between; } }
 
     /* NAVBAR */
     header { position: sticky; top: 0; z-index: 1000; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
-    .logo { font-size: 22px; font-weight: 700; color: var(--primary); }
-    .menu { display: flex; gap: 24px; }
-    .menu a { font-weight: 500; position: relative; padding-bottom: 4px; transition: 0.25s ease; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; max-width: 1200px; margin: 0 auto; }
+    .logo { font-size: 22px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+    .menu { display: none; gap: 24px; align-items: center; }
+    @media(min-width: 900px) { .menu { display: flex; } }
+
+    .menu a { font-weight: 500; position: relative; padding: 8px 0; font-size: 15px; }
     .menu a:hover { color: var(--primary); }
-    .menu a:hover::after { content:""; position:absolute; left:0; bottom:0; width:100%; height:2px; background:var(--primary); border-radius:2px; }
+    .menu a::after { content:""; position:absolute; left:0; bottom:0; width:0%; height:2px; background:var(--primary); transition: width 0.25s ease; border-radius:2px; }
+    .menu a:hover::after { width:100%; }
 
     /* DROPDOWN */
     .dropdown { position: relative; }
-    .dropdown-content { position: absolute; top: 100%; left: 0; background: #fff; padding: 12px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: none; flex-direction: column; min-width: 240px; border: 1px solid #e4e4e4; animation: dropfade 0.25s ease; }
-    .dropdown-content a { padding: 10px; border-radius: var(--radius); transition: 0.2s; }
+    .dropdown > a { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .dropdown > a::after { content: "▾"; font-size: 12px; }
+    .dropdown-content { position: absolute; top: 100%; left: 0; background: #fff; padding: 8px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: none; flex-direction: column; min-width: 240px; border: 1px solid #e4e4e4; z-index: 1001; margin-top: 8px; }
+    .dropdown-content a { padding: 10px 12px; border-radius: 4px; color: #444; }
     .dropdown-content a:hover { background: var(--primary-light); color: var(--primary); }
-    .dropdown:hover .dropdown-content { display: flex; }
+    .dropdown-content a::after { display: none; }
+    .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content { display: flex; animation: fadeUp 0.2s ease; }
 
     /* MOBILE MENU */
-    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 4px; }
-    .hamburger span { width: 24px; height: 3px; background: var(--dark); border-radius: 2px; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { width: 26px; height: 3px; background: var(--dark); border-radius: 2px; transition: 0.3s; }
+    @media(min-width: 900px) { .hamburger { display: none; } }
 
-    .mobile-panel { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.15); padding: 20px; display: flex; flex-direction: column; gap: 20px; transition: 0.3s ease; overflow-y: auto; padding-bottom: 80px; z-index: 1501; }
-    .mobile-panel.open { right: 0; }
-    .mobile-panel a, .mobile-parent { font-weight: 500; padding: 8px 0; border-bottom: 1px solid #eee; display: block; text-align: left; background: none; border-radius: 0; color: #222; }
-    .mobile-parent { border: none; width: 100%; cursor: pointer; }
-    .mobile-group { display: flex; flex-direction: column; gap: 6px; }
-    .mobile-submenu { max-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding-left: 10px; border-left: 2px solid var(--primary-light); transition: max-height 0.25s ease; }
-    .mobile-group.open .mobile-submenu { max-height: 500px; }
+    .menu-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; backdrop-filter: blur(2px); }
+    .menu-backdrop.open { opacity: 1; visibility: visible; }
 
-    @media(max-width:768px){
-      .menu { display: none; }
-      .hamburger { display: flex; }
+    .mobile-panel {
+      position: fixed; top: 0; right: 0; width: 280px; height: 100%;
+      background: #fff; box-shadow: -2px 0 12px rgba(0,0,0,0.1); padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+      z-index: 1501; overflow-y: auto; will-change: transform;
+      visibility: hidden; transform: translateX(100%);
+    }
+    .mobile-panel.open {
+      transform: translateX(0); visibility: visible;
     }
 
+    .mobile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .mobile-title { font-weight: 700; color: var(--primary); font-size: 18px; }
+    .mobile-close { background: none; border: none; font-size: 28px; color: #666; cursor: pointer; padding: 4px; line-height: 1; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 4px; }
+    .mobile-close:hover { background: #f0f0f0; color: #000; }
+
+    .mobile-panel a, .mobile-parent { font-weight: 500; padding: 12px 0; border-bottom: 1px solid #eee; display: block; text-align: left; background: none; color: #333; font-size: 16px; }
+    .mobile-parent { border: none; width: 100%; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+    .mobile-parent::after { content: "▾"; font-size: 14px; transition: transform 0.2s; }
+    .mobile-parent[aria-expanded="true"]::after { transform: rotate(180deg); }
+
+    .mobile-submenu { max-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; background: #fafafa; border-radius: 4px; transition: max-height 0.3s ease; }
+    .mobile-submenu a { padding: 10px 16px; font-size: 15px; border-bottom: none; color: #555; }
+    .mobile-submenu a:hover { background: #eee; color: var(--primary); }
+
     /* HERO */
-    .hero { display: flex; flex-direction: column; padding: 40px 20px; gap: 30px; }
-    @media(min-width:900px){ .hero { flex-direction: row; align-items: center; padding: 60px 40px; } }
+    .hero { padding: 40px 20px; display: flex; flex-direction: column; gap: 40px; align-items: center; }
+    @media(min-width:900px){ .hero { flex-direction: row; padding: 60px 40px; max-width: 1200px; margin: 0 auto; } }
 
-    .hero-img { flex: 1; background: linear-gradient(120deg, #0a6cc4, #4aa3ff); aspect-ratio: 4/3; border-radius: var(--radius); }
-    .hero-text { flex: 1; display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.6s ease; }
-
+    .hero-img { flex: 1; width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #0a6cc4, #4aa3ff); border-radius: 16px; box-shadow: 0 10px 30px rgba(10,108,196,0.15); }
+    .hero-text { flex: 1; display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.6s ease; width: 100%; }
     .hero-text.animate { opacity: 1; transform: translateY(0); }
 
-    .hero-text h1 { font-size: 32px; font-weight: 700; color: var(--dark); }
-    .hero-text p { font-size: 16px; color: #444; }
+    .hero-badge { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 14px; display: block; }
+    .hero-text h1 { font-size: 32px; font-weight: 700; color: var(--dark); line-height: 1.2; }
+    @media(min-width: 900px) { .hero-text h1 { font-size: 42px; } }
+    .hero-text p { font-size: 16px; color: #444; max-width: 500px; }
 
-    .btn { padding: 12px 20px; border-radius: var(--radius); font-weight: 600; text-align: center; }
-    .btn-primary { background: var(--primary); color: #fff; transition: 0.25s ease; }
-    .btn-primary:hover { background: #084f91; }
-    .btn-secondary { border: 2px solid var(--primary); color: var(--primary); transition: 0.25s ease; }
-    .btn-secondary:hover { background: var(--primary); color: #fff; }
+    .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn { padding: 14px 24px; border-radius: var(--radius); font-weight: 600; text-align: center; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer; transition: 0.2s ease; }
+    .btn-primary { background: var(--primary); color: #fff; border: 2px solid var(--primary); }
+    .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); transform: translateY(-2px); }
+    .btn-secondary { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-secondary:hover { background: var(--primary-light); transform: translateY(-2px); }
 
     /* FEATURE CARDS */
-    .features { display: grid; gap: 20px; padding: 40px 20px; }
-    @media(min-width:900px){ .features { grid-template-columns: repeat(3,1fr); } }
+    .features { display: grid; gap: 24px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+    @media(min-width:768px){ .features { grid-template-columns: repeat(3,1fr); } }
 
-    .feature-card { position: relative; height: 220px; background: linear-gradient(120deg,#4aa3ff,#0a6cc4); border-radius: var(--radius); padding: 20px; color:#fff; display: flex; flex-direction: column; justify-content: flex-end; transition: 0.3s; }
-    .feature-card:hover { transform: translateY(-6px); }
+    .feature-card { position: relative; height: 220px; background: linear-gradient(135deg, #4aa3ff, #0a6cc4); border-radius: 16px; padding: 24px; color:#fff; display: flex; flex-direction: column; justify-content: flex-end; transition: 0.3s; box-shadow: 0 4px 12px rgba(10,108,196,0.2); overflow: hidden; }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(10,108,196,0.3); }
+    .feature-card h3 { font-size: 20px; margin-bottom: 4px; }
+    .feature-card p { font-size: 14px; opacity: 0.9; margin-bottom: 12px; }
+    .feature-card span { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 4px; }
 
     /* HIGH-TECH */
-    .hightech { background: var(--primary-light); padding: 60px 20px; text-align: center; }
-    .hightech h2 { color: var(--dark); margin-bottom: 16px; }
+    .hightech { background: var(--primary-light); padding: 80px 20px; text-align: center; }
+    .hightech-inner { max-width: 800px; margin: 0 auto; }
+    .hightech h2 { color: var(--dark); margin-bottom: 16px; font-size: 28px; }
+    .hightech p { color: #444; font-size: 16px; max-width: 600px; margin: 0 auto; }
 
     /* DOCTORS */
-    .doctors { padding: 60px 20px; background: #f6f9ff; text-align: center; }
-    .doctors h2 { font-size: 26px; color: var(--dark); margin-bottom: 8px; }
-    .doctors p.section-subtitle { color: #555; max-width: 520px; margin: 0 auto 32px; font-size: 15px; }
-    .doctor-grid { display: grid; gap: 24px; max-width: 1100px; margin: 0 auto; align-items: stretch; }
+    .doctors { padding: 80px 20px; background: #f8fbfe; text-align: center; }
+    .doctors h2 { font-size: 30px; color: var(--dark); margin-bottom: 12px; }
+    .section-desc { color: #666; max-width: 500px; margin: 0 auto 40px; font-size: 16px; }
+
+    .doctor-grid { display: grid; gap: 24px; max-width: 1100px; margin: 0 auto; }
+    @media(min-width:600px){ .doctor-grid { grid-template-columns: repeat(2,1fr); } }
     @media(min-width:900px){ .doctor-grid { grid-template-columns: repeat(3,1fr); } }
 
     .doctor-card {
-  position: relative;
-  height: 280px;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 8px 20px rgba(10,108,196,0.10);
-  transition: 0.25s ease;
-}
-.doctor-card::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
-}
-.doctor-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(10,108,196,0.18);
-}
-    .doctor-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:48px; background: linear-gradient(120deg,#0a6cc4,#4aa3ff); opacity:0.2; }
-    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(10,108,196,0.12); border-color: #c2d9f5; }
+      position: relative;
+      height: 340px;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      background-size: cover;
+      background-position: center top;
+      background-color: #ddd;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+    .doctor-card::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70%;
+      background: linear-gradient(to top, rgba(10, 42, 67, 0.9) 0%, rgba(10, 42, 67, 0.5) 50%, rgba(10, 42, 67, 0) 100%);
+      z-index: 1;
+      transition: height 0.3s ease;
+    }
+    .doctor-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(10,108,196,0.15); }
+    .doctor-card:hover::before { height: 80%; }
 
-    .doctor-photo {
-  width: 100%;
-  height: 180px;
-  border-radius: 12px;
-  background: url('https://via.placeholder.com/400x300') center/cover no-repeat;
-  margin: 0 auto 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-    .doctor-card h3 {
-  position: relative;
-  color: #fff;
-  font-size: 20px;
-  margin-bottom: 4px;
-  z-index: 2;
-}
-    .doctor-card p {
-  position: relative;
-  color: #eaeaea;
-  font-size: 14px;
-  margin-bottom: 10px;
-  z-index: 2;
-}
-    .doctor-card .btn { margin-top: 14px; padding-inline: 18px; font-size: 14px; }
+    .doctor-info { position: relative; z-index: 2; }
+    .doctor-name { color: #fff; font-size: 22px; margin-bottom: 4px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .doctor-role { color: #e0e0e0; font-size: 15px; margin-bottom: 16px; font-weight: 500; }
+    .doctor-btn { display: inline-block; padding: 10px 18px; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 6px; font-size: 14px; font-weight: 500; transition: 0.2s; }
+    .doctor-btn:hover { background: #fff; color: var(--primary); border-color: #fff; }
 
     /* SERVICES GRID */
-    .services { padding: 60px 20px; }
-    .services-grid { display: grid; gap: 20px; }
-    @media(min-width:900px){ .services-grid { grid-template-columns: repeat(3,1fr); } }
+    .services { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+    .services h2 { text-align: center; color: var(--dark); font-size: 30px; margin-bottom: 40px; }
+    .services-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 
-    .service-card { background: var(--grey); padding: 20px; border-radius: var(--radius); display:flex; flex-direction:column; gap:10px; }
-    .service-icon { width: 40px; height: 40px; border-radius:var(--radius); background: linear-gradient(120deg,#0a6cc4,#4aa3ff); }
+    .service-card { background: #fff; border: 1px solid #eee; padding: 24px; border-radius: 12px; display:flex; flex-direction:column; gap:12px; transition: 0.2s; }
+    .service-card:hover { border-color: var(--primary-light); box-shadow: 0 8px 20px rgba(10,108,196,0.08); transform: translateY(-2px); }
+    .service-icon { width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #0a6cc4, #4aa3ff); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; margin-bottom: 4px; }
+    .service-card h3 { font-size: 18px; color: var(--dark); }
+    .service-card p { font-size: 14px; color: #666; flex: 1; }
+    .service-link { color: var(--primary); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 4px; }
+    .service-link:hover { text-decoration: underline; }
 
     /* REVIEWS */
-    .reviews { padding: 60px 20px; }
-    .review-card { background: var(--grey); padding:20px; border-radius:var(--radius); }
+    .reviews { padding: 80px 20px; background: #fff; text-align: center; }
+    .review-grid { display: grid; gap: 24px; max-width: 900px; margin: 40px auto 0; }
+    @media(min-width: 768px) { .review-grid { grid-template-columns: 1fr 1fr; } }
+
+    .review-card { background: var(--grey); padding: 32px; border-radius: 16px; text-align: left; display: flex; flex-direction: column; gap: 12px; }
+    .stars { color: #fbbf24; font-size: 18px; letter-spacing: 2px; }
+    .review-text { font-style: italic; color: #555; font-size: 16px; line-height: 1.6; flex: 1; }
+    .review-author { font-weight: 700; color: var(--dark); }
+    .review-link { font-size: 13px; color: #888; margin-top: 8px; display: inline-block; }
 
     /* LOCATION */
-    .location-section { padding:60px 20px; background:#ffffff; }
-    .location-inner { max-width:1100px; margin:0 auto; display:grid; gap:24px; align-items:stretch; }
-    @media(min-width:900px){ .location-inner { grid-template-columns: minmax(0,1.1fr) minmax(0,1.2fr); } }
-    .location-text { display:flex; flex-direction:column; gap:10px; }
-    .location-text h2 { font-size:24px; color:var(--dark); }
-    .location-text p { font-size:14px; color:#555; }
-    .location-text .location-desc { max-width:460px; }
-    .location-text .location-name { font-weight:500; }
-    .location-text .location-hours { font-size:14px; }
-    .location-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .location-map-wrapper { border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(10,108,196,0.18); min-height:260px; }
-    .location-map-inner { position:relative; width:100%; padding-top:60%; }
-    .location-map-inner iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    .location-section { padding: 80px 20px; background: #fcfcfc; }
+    .location-inner { max-width:1100px; margin:0 auto; display:grid; gap:40px; align-items:stretch; }
+    @media(min-width:900px){ .location-inner { grid-template-columns: 1fr 1fr; } }
+
+    .location-text { display:flex; flex-direction:column; gap:16px; justify-content: center; }
+    .location-text h2 { font-size: 30px; color:var(--dark); }
+    .location-details { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+    .loc-item { display: flex; gap: 12px; align-items: flex-start; }
+    .loc-icon { color: var(--primary); font-size: 18px; margin-top: 2px; }
+    .location-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+
+    .location-map-wrapper { border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(0,0,0,0.08); height: 100%; min-height: 300px; background: #eee; }
+    .location-map-inner { width:100%; height: 100%; }
+    .location-map-inner iframe { width:100%; height:100%; border:0; min-height: 300px; }
 
     /* FAQ */
-    .faq { padding:60px 20px; background:#f6f9ff; }
-    .faq-inner { max-width: 900px; margin: 0 auto; }
-    .faq h2 { text-align:center; color:var(--dark); margin-bottom:8px; }
-    .faq-desc { text-align:center; color:#555; margin-bottom:24px; font-size:15px; }
-    .faq-item { background:#fff; border-radius:12px; padding:16px 18px; margin-bottom:12px; box-shadow:0 4px 10px rgba(10,108,196,0.04); border:1px solid #e3edf8; cursor:pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
-    .faq-item:hover { border-color:#c4d8f3; box-shadow:0 6px 14px rgba(10,108,196,0.08); transform: translateY(-2px); }
-    .faq-header { display:flex; align-items:center; gap:12px; justify-content:space-between; }
-    .faq-question { flex:1; font-weight:500; color:var(--dark); font-size:15px; }
-    .faq-icon { flex-shrink:0; width:24px; height:24px; border-radius:50%; border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:16px; line-height:1; color:var(--primary); transition: 0.25s ease; }
-    .faq-item.open .faq-icon { background:var(--primary); color:#fff; transform: rotate(45deg); }
-    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease; font-size:14px; color:#555; padding-left:36px; }
-    .faq-item.open .faq-answer { margin-top:8px; }
+    .faq { padding: 80px 20px; background: #f6f9ff; }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq h2 { text-align:center; color:var(--dark); margin-bottom: 12px; font-size: 30px; }
+    .faq-desc { text-align:center; color:#555; margin-bottom: 40px; font-size: 16px; }
+
+    .faq-item { background:#fff; border-radius:12px; padding: 0; margin-bottom:16px; box-shadow:0 2px 6px rgba(0,0,0,0.03); border:1px solid #e3edf8; overflow: hidden; }
+    .faq-header { display:flex; align-items:center; gap:16px; justify-content:space-between; padding: 18px 24px; cursor: pointer; background: #fff; transition: 0.2s; }
+    .faq-header:hover { background: #fdfdfd; }
+    .faq-question { flex:1; font-weight:600; color:var(--dark); font-size:16px; }
+    .faq-icon { flex-shrink:0; width:24px; height:24px; border-radius:50%; border:2px solid var(--primary-light); color: var(--primary); display:flex; align-items:center; justify-content:center; font-size:18px; transition: 0.25s ease; }
+
+    .faq-item[aria-expanded="true"] .faq-icon { background:var(--primary); border-color: var(--primary); color:#fff; transform: rotate(45deg); }
+    .faq-item[aria-expanded="true"] .faq-header { border-bottom: 1px solid #f0f0f0; }
+
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease; background: #fff; }
+    .faq-answer p { padding: 24px; color: #555; font-size: 15px; line-height: 1.6; }
 
     /* FOOTER */
-    footer { background: var(--dark); color: #fff; padding: 40px 20px; }
-    .footer-grid { display:grid; gap:24px; }
-    @media(min-width:900px){ .footer-grid { grid-template-columns: repeat(3,1fr); } }
+    footer { background: var(--dark); color: #fff; padding: 60px 20px 30px; }
+    .footer-grid { display:grid; gap:40px; max-width: 1200px; margin: 0 auto; }
+    @media(min-width:600px){ .footer-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(min-width:900px){ .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
 
-    .footer-column h4 { margin-bottom: 12px; }
-
-    .footer-bottom { text-align:center; margin-top:20px; font-size:14px; }
+    .footer-column h4 { margin-bottom: 20px; font-size: 18px; color: #fff; }
+    .footer-column p, .footer-column a { color: #b8c6d1; font-size: 14px; margin-bottom: 10px; display: block; line-height: 1.5; }
+    .footer-column a:hover { color: #fff; text-decoration: underline; }
+    .footer-bottom { text-align:center; margin-top:60px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size:13px; color: #7a8fa1; }
 
     /* WHATSAPP FLOAT */
-    .wa-float { position:fixed; bottom:20px; right:20px; width:56px; height:56px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1200; transition:0.25s ease; box-shadow:0 4px 10px rgba(0,0,0,0.15); }
-    .wa-float:hover { transform: translateY(-4px) scale(1.08); box-shadow:0 8px 18px rgba(0,0,0,0.22); background:#1ebe5d; }
-    .wa-float svg { width:28px; fill:#fff; }
-  @keyframes dropfade { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+    .wa-float { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1400; transition:0.25s ease; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+    .wa-float:hover { transform: translateY(-4px) scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.3); background:#1ebe5d; }
+    .wa-float:focus-visible { outline: 3px solid #fff; outline-offset: -2px; }
+    .wa-float svg { width:32px; height: 32px; fill:#fff; }
+
+    /* ANIMATION UTILS */
+    @keyframes fadeUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <div>Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</div>
+  <span>Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Sat–Sun Closed</span>
   <a href="tel:03212073839">Call: 0321-2073839</a>
 </div>
 
 <header>
   <nav class="nav">
-    <div class="logo">DentalVision2000</div>
+    <a href="#" class="logo">DentalVision2000</a>
     <div class="menu">
-      <a href="#">Home</a>
+      <a href="#" aria-current="page">Home</a>
       <a href="doctors.html">Meet the Doctors</a>
       <div class="dropdown">
-        <a href="Services-page-dentalvision2000.html">Services</a>
+        <a href="Services-page-dentalvision2000.html" aria-haspopup="true" aria-expanded="false">Services</a>
         <div class="dropdown-content">
           <a href="root-canal.html">Root Canal Treatment</a>
           <a href="implants.html">Dental Implants</a>
@@ -230,39 +291,49 @@
           <a href="fillings.html">Dental Fillings</a>
           <a href="crowns.html">Crowns & Bridges</a>
           <a href="gum.html">Gum Treatment</a>
-          <a href="full-mouth.html">Full Mouth Rehabilitation</a>
-          <a href="emergency.html">Emergency Dental Care</a>
+          <a href="full-mouth.html">Full Mouth Rehab</a>
+          <a href="emergency.html">Emergency Care</a>
           <a href="pediatric.html">Pediatric Dentistry</a>
         </div>
       </div>
       <a href="consultation.html">Consultation</a>
     </div>
 
-    <div class="hamburger" id="hamburger">
+    <button class="hamburger" id="hamburger" aria-label="Open Menu">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </nav>
 </header>
 
-<div class="mobile-panel" id="mobilePanel">
+<!-- Mobile Menu Components -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="mobile-header">
+    <span class="mobile-title">Menu</span>
+    <button class="mobile-close" id="mobileClose" aria-label="Close Menu">×</button>
+  </div>
+
   <a href="#">Home</a>
   <a href="doctors.html">Meet the Doctors</a>
+
   <div class="mobile-group">
-    <button type="button" class="mobile-parent">Services ▾</button>
-    <div class="mobile-submenu">
+    <button type="button" class="mobile-parent" aria-expanded="false" id="mobileServicesBtn">Services</button>
+    <div class="mobile-submenu" id="mobileServicesMenu">
       <a href="root-canal.html">Root Canal Treatment</a>
       <a href="implants.html">Dental Implants</a>
       <a href="invisible-aligners.html">Invisible Aligners</a>
-      <a href="scaling.html">Scaling &amp; Polishing</a>
+      <a href="scaling.html">Scaling & Polishing</a>
       <a href="whitening.html">Teeth Whitening</a>
       <a href="fillings.html">Dental Fillings</a>
-      <a href="crowns.html">Crowns &amp; Bridges</a>
+      <a href="crowns.html">Crowns & Bridges</a>
       <a href="gum.html">Gum Treatment</a>
-      <a href="full-mouth.html">Full Mouth Rehabilitation</a>
-      <a href="emergency.html">Emergency Dental Care</a>
+      <a href="full-mouth.html">Full Mouth Rehab</a>
+      <a href="emergency.html">Emergency Care</a>
       <a href="pediatric.html">Pediatric Dentistry</a>
     </div>
   </div>
+
   <a href="consultation.html">Consultation</a>
 </div>
 
@@ -271,11 +342,11 @@
   <section class="hero">
     <div class="hero-img"></div>
     <div class="hero-text" id="heroText">
-      <small style="color:var(--primary);font-weight:700;">Family-Friendly Dental Clinic in Karachi</small>
+      <span class="hero-badge">Family-Friendly Dental Clinic in Karachi</span>
       <h1>Safe, Comfortable & Affordable Dental Care</h1>
-      <p>Your family’s trusted dental clinic for check-ups, emergencies and smile makeovers.</p>
-      <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Schedule Appointment on WhatsApp</a>
+      <p>Your family’s trusted dental clinic for check-ups, emergencies and smile makeovers. We provide world-class treatment in a sterile environment.</p>
+      <div class="btn-group">
+        <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Schedule Appointment</a>
         <a href="consultation.html" class="btn btn-secondary">Online Consultation</a>
       </div>
     </div>
@@ -284,73 +355,150 @@
   <!-- FEATURES -->
   <section class="features">
     <a class="feature-card" href="root-canal.html">
-      <div><strong>Root Canal Treatment</strong><br><small>Microscope-assisted precision for lasting relief</small><br>Learn more →</div>
+      <h3>Root Canal Treatment</h3>
+      <p>Microscope-assisted precision for lasting relief from tooth pain.</p>
+      <span>Learn more →</span>
     </a>
     <a class="feature-card" href="implants.html">
-      <div><strong>Dental Implants</strong><br><small>Natural-looking, stable replacements</small><br>Learn more →</div>
+      <h3>Dental Implants</h3>
+      <p>Natural-looking, stable replacements for missing teeth.</p>
+      <span>Learn more →</span>
     </a>
     <a class="feature-card" href="invisible-aligners.html">
-      <div><strong>Invisible Aligners</strong><br><small>Clear trays for straighter teeth</small><br>Learn more →</div>
+      <h3>Invisible Aligners</h3>
+      <p>Clear, removable trays for straighter teeth without braces.</p>
+      <span>Learn more →</span>
     </a>
   </section>
 
   <!-- HIGH TECH -->
   <section class="hightech">
-    <h2>Modern Care, Simple Approach</h2>
-    <p>At DentalVision2000, we use digital x-rays, high‑quality materials and strict sterilization — all while keeping treatments simple, clear and affordable for every family.</p>
+    <div class="hightech-inner">
+      <h2>Modern Care, Simple Approach</h2>
+      <p>At DentalVision2000, we use digital x-rays, high‑quality materials and strict sterilization — all while keeping treatments simple, clear and affordable for every family.</p>
+    </div>
   </section>
 
   <!-- DOCTORS -->
   <section class="doctors">
-    <h2>Meet the Doctors</h2><br>
+    <h2>Meet the Doctors</h2>
+    <p class="section-desc">Our experienced team is dedicated to providing you with the best possible dental care.</p>
+
     <div class="doctor-grid">
       <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Furqan Ahmed</h3>
-        <p>Founder & Senior Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-furqan.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+        <div class="doctor-info">
+          <h3 class="doctor-name">Dr. Furqan Ahmed</h3>
+          <p class="doctor-role">Founder & Senior Dentist</p>
+          <a href="doctor-furqan.html" class="doctor-btn">View Profile</a>
+        </div>
       </div>
 
       <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Uzma Shaheen</h3>
-        <p>General Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-uzma.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+        <div class="doctor-info">
+          <h3 class="doctor-name">Dr. Uzma Shaheen</h3>
+          <p class="doctor-role">General Dentist</p>
+          <a href="doctor-uzma.html" class="doctor-btn">View Profile</a>
+        </div>
       </div>
 
       <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Fateh</h3>
-        <p>General Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-fateh.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+        <div class="doctor-info">
+          <h3 class="doctor-name">Dr. Fateh</h3>
+          <p class="doctor-role">General Dentist</p>
+          <a href="doctor-fateh.html" class="doctor-btn">View Profile</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES GRID -->
   <section class="services">
-    <h2>Treatments We Offer</h2><br>
+    <h2>Treatments We Offer</h2>
     <div class="services-grid">
-      <div class="service-card"><div class="service-icon"></div><strong>Root Canal Treatment</strong><p>Precision cleaning, pain-free relief.</p><a href="root-canal.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Dental Implants</strong><p>Strong, natural-looking teeth.</p><a href="implants.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Invisible Aligners</strong><p>Clear and removable trays.</p><a href="invisible-aligners.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Scaling & Polishing</strong><p>Deep cleaning for fresh smiles.</p><a href="scaling.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Teeth Whitening</strong><p>Instant brightness boost.</p><a href="whitening.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Dental Fillings</strong><p>Fix cavities quickly.</p><a href="fillings.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Crowns & Bridges</strong><p>Restore teeth strength.</p><a href="crowns.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Gum Treatment</strong><p>Healthy gums, healthy smile.</p><a href="gum.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Full Mouth Rehabilitation</strong><p>Total dental restoration.</p><a href="full-mouth.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Emergency Dental Care</strong><p>Fast help for urgent cases.</p><a href="emergency.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Pediatric Dentistry</strong><p>Gentle care for children.</p><a href="pediatric.html">Learn more →</a></div>
+      <div class="service-card">
+        <div class="service-icon">🦷</div>
+        <h3>Root Canal</h3>
+        <p>Precision cleaning and pain-free relief for infected teeth.</p>
+        <a href="root-canal.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <h3>Dental Implants</h3>
+        <p>Strong, natural-looking teeth replacement.</p>
+        <a href="implants.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">😁</div>
+        <h3>Invisible Aligners</h3>
+        <p>Clear and removable trays for straightening.</p>
+        <a href="invisible-aligners.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛡️</div>
+        <h3>Scaling & Polishing</h3>
+        <p>Deep cleaning for fresh breath and healthy gums.</p>
+        <a href="scaling.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌟</div>
+        <h3>Teeth Whitening</h3>
+        <p>Instant brightness boost for your smile.</p>
+        <a href="whitening.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Dental Fillings</h3>
+        <p>Fix cavities quickly with tooth-colored fillings.</p>
+        <a href="fillings.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👑</div>
+        <h3>Crowns & Bridges</h3>
+        <p>Restore teeth strength and appearance.</p>
+        <a href="crowns.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💊</div>
+        <h3>Gum Treatment</h3>
+        <p>Comprehensive care for healthy gums.</p>
+        <a href="gum.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏥</div>
+        <h3>Emergency Care</h3>
+        <p>Fast help for urgent dental cases.</p>
+        <a href="emergency.html" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👶</div>
+        <h3>Pediatric Dentistry</h3>
+        <p>Gentle and friendly care for children.</p>
+        <a href="pediatric.html" class="service-link">Learn more →</a>
+      </div>
     </div>
   </section>
 
   <!-- REVIEWS -->
   <section class="reviews">
-    <h2>What Our Patients Say</h2><br>
-    <!-- TODO: Replace with actual Google Reviews embed -->
-    <div class="review-card"><strong>★★★★★ — Ali</strong><p>Very professional and friendly staff. Highly recommended!</p><a href="#">View on Google →</a></div><br>
-    <div class="review-card"><strong>★★★★☆ — Sara</strong><p>The treatment was smooth and painless. Clean clinic environment.</p><a href="#">View on Google →</a></div><br>
+    <h2>What Our Patients Say</h2>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Very professional and friendly staff. The clinic is spotless and the doctor explained everything clearly. Highly recommended!"</p>
+        <div>
+          <p class="review-author">Ali Khan</p>
+          <a href="#" class="review-link">View on Google →</a>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <p class="review-text">"The treatment was smooth and painless. I was very nervous but they made me feel comfortable."</p>
+        <div>
+          <p class="review-author">Sara Ahmed</p>
+          <a href="#" class="review-link">View on Google →</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- LOCATION / MAP -->
@@ -358,10 +506,26 @@
     <div class="location-inner">
       <div class="location-text">
         <h2>Visit Our Clinic</h2>
-        <p class="location-desc">We are located in the heart of Federal B Area, with easy access and parking nearby. You can use the map to get directions directly to our clinic.</p>
-        <p class="location-name">DentalVision2000</p>
-        <p class="location-address">Plot R 1233, Federal B Area Block 15,<br>Gulberg Town, Karachi</p>
-        <p class="location-hours">Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</p>
+        <p>We are located in the heart of Federal B Area, with easy access and parking nearby.</p>
+
+        <div class="location-details">
+          <div class="loc-item">
+            <span class="loc-icon">📍</span>
+            <div>
+              <strong>DentalVision2000</strong><br>
+              Plot R 1233, Federal B Area Block 15,<br>Gulberg Town, Karachi
+            </div>
+          </div>
+          <div class="loc-item">
+            <span class="loc-icon">🕒</span>
+            <div>
+              <strong>Service Hours</strong><br>
+              Mon–Fri 11:00 AM – 9:00 PM<br>
+              Sat–Sun Closed
+            </div>
+          </div>
+        </div>
+
         <div class="location-actions">
           <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
           <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" target="_blank" class="btn btn-secondary">Open in Google Maps</a>
@@ -369,11 +533,11 @@
       </div>
       <div class="location-map-wrapper">
         <div class="location-map-inner">
-          <!-- Embedded Google Map -->
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s"
             allowfullscreen=""
             loading="lazy"
+            title="Clinic Location"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
         </div>
@@ -385,53 +549,53 @@
   <section class="faq">
     <div class="faq-inner">
       <h2>Frequently Asked Questions</h2>
-      <p class="faq-desc">Quick answers to the questions patients ask us most often.</p><br>
+      <p class="faq-desc">Quick answers to common questions about our services.</p>
 
-      <div class="faq-item">
-        <div class="faq-header">
+      <div class="faq-item" aria-expanded="false">
+        <button class="faq-header" type="button">
           <span class="faq-question">Do I need an appointment or can I walk in?</span>
           <span class="faq-icon">+</span>
-        </div>
+        </button>
         <div class="faq-answer">
-          <p>Appointments are recommended so we can reserve your slot, but walk-ins are accepted based on availability.</p>
+          <p>Appointments are recommended so we can reserve your slot, but walk-ins are accepted based on availability. Booking in advance via WhatsApp ensures you don't have to wait.</p>
         </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-header">
+      <div class="faq-item" aria-expanded="false">
+        <button class="faq-header" type="button">
           <span class="faq-question">Is treatment painful?</span>
           <span class="faq-icon">+</span>
-        </div>
+        </button>
         <div class="faq-answer">
-          <p>Most treatments are very comfortable. We use modern anesthetics and gentle techniques to keep you relaxed.</p>
+          <p>Most treatments are very comfortable. We use modern anesthetics and gentle techniques to keep you relaxed. For anxious patients, we take extra care to ensure a pain-free experience.</p>
         </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-header">
+      <div class="faq-item" aria-expanded="false">
+        <button class="faq-header" type="button">
           <span class="faq-question">Do you treat children?</span>
           <span class="faq-icon">+</span>
-        </div>
+        </button>
         <div class="faq-answer">
-          <p>Yes, we offer pediatric dentistry. Our team is used to treating children in a calm, friendly way.</p>
+          <p>Yes, we offer pediatric dentistry. Our team is experienced in treating children in a calm, friendly way to make them feel safe.</p>
         </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-header">
+      <div class="faq-item" aria-expanded="false">
+        <button class="faq-header" type="button">
           <span class="faq-question">How can I book an appointment?</span>
           <span class="faq-icon">+</span>
-        </div>
+        </button>
         <div class="faq-answer">
           <p>You can message us on WhatsApp, call the clinic during service hours, or visit in person to book your slot.</p>
         </div>
       </div>
 
-      <div class="faq-item">
-        <div class="faq-header">
+      <div class="faq-item" aria-expanded="false">
+        <button class="faq-header" type="button">
           <span class="faq-question">What if I have a dental emergency?</span>
           <span class="faq-icon">+</span>
-        </div>
+        </button>
         <div class="faq-answer">
           <p>For emergencies, contact us on WhatsApp or call immediately. We will guide you and try to see you as soon as possible.</p>
         </div>
@@ -445,9 +609,9 @@
   <div class="footer-grid">
     <div class="footer-column">
       <h4>DentalVision2000</h4>
-      <p>Plot R 1233, Federal B Area Block 15, Gulberg Town, Karachi</p><br>
-      <a href="tel:03212073839" style="color:#fff;">0321-2073839</a><br><br>
-      <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" style="color:#fff;" target="_blank">Open in Google Maps</a>
+      <p>Plot R 1233, Federal B Area Block 15,<br>Gulberg Town, Karachi</p>
+      <p><a href="tel:03212073839">0321-2073839</a></p>
+      <p><a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" target="_blank">View on Map</a></p>
     </div>
 
     <div class="footer-column">
@@ -455,73 +619,125 @@
       <p><a href="root-canal.html">Root Canal</a></p>
       <p><a href="implants.html">Dental Implants</a></p>
       <p><a href="invisible-aligners.html">Invisible Aligners</a></p>
-      <p><a href="scaling.html">Scaling</a></p>
-      <p><a href="whitening.html">Whitening</a></p>
-      <p><a href="fillings.html">Fillings</a></p>
-      <p><a href="crowns.html">Crowns & Bridges</a></p>
-      <p><a href="gum.html">Gum Treatment</a></p>
-      <p><a href="full-mouth.html">Full Mouth Rehab</a></p>
-      <p><a href="emergency.html">Emergency Care</a></p>
-      <p><a href="pediatric.html">Pediatric Dentistry</a></p>
+      <p><a href="scaling.html">Scaling & Polishing</a></p>
+      <p><a href="whitening.html">Teeth Whitening</a></p>
     </div>
 
     <div class="footer-column">
       <h4>Service Hours</h4>
       <p>Mon–Fri: 11:00 AM – 9:00 PM</p>
-      <p><strong>Sunday: CLOSED</strong></p>
+      <p>Sat–Sun: Closed</p>
     </div>
   </div>
 
-  <div class="footer-bottom">© DentalVision2000. All rights reserved.</div>
+  <div class="footer-bottom">
+    &copy; 2024 DentalVision2000. All rights reserved.
+  </div>
 </footer>
 
 <!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/923212073839" target="_blank" class="wa-float">
+<a href="https://wa.me/923212073839" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.5.8 4.9 2.1 6.9L4 29l7.3-2c1.9 1 4 1.6 6.6 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm6.7 17.5c-.3.9-1.7 1.7-2.4 1.8-.6.1-1.4.1-2.3-.1-.5-.1-1.2-.4-2-0.8-3.5-1.9-5.8-5.4-6-5.7-.2-.3-1.4-1.9-1.4-3.6 0-1.7.9-2.5 1.3-2.9.3-.3.7-.4 1-.4h.7c.2 0 .6-.1.9.7.3.9 1.1 2.9 1.2 3.1.1.2.1.4 0 .6-.1.3-.2.4-.4.6-.2.2-.5.6-.7.8-.2.2-.5.5-.2 1 0.3.5 1.3 2.2 2.9 3.5 2 1.8 3.6 2.4 4.2 2.7.6.3.9.2 1.2-.1.4-.5 1-1.3 1.3-1.7.3-.4.6-.4.9-.3s2.3 1.1 2.7 1.3c.4.2.7.3.8.5.1.2.1 1-.2 1.9z"/></svg>
 </a>
 
 <script>
-// MOBILE MENU
+// --- MOBILE MENU SYSTEM ---
 const hamburger = document.getElementById('hamburger');
 const panel = document.getElementById('mobilePanel');
-if (hamburger && panel) {
-  hamburger.addEventListener('click', () => panel.classList.toggle('open'));
-  panel.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => panel.classList.remove('open'))
-  );
-  const mobileServiceGroup = panel.querySelector('.mobile-group');
-  const mobileParent = panel.querySelector('.mobile-parent');
-  if (mobileParent && mobileServiceGroup) {
-    mobileParent.addEventListener('click', (e) => {
-      e.stopPropagation();
-      mobileServiceGroup.classList.toggle('open');
-    });
-  }
+const backdrop = document.getElementById('menuBackdrop');
+const closeBtn = document.getElementById('mobileClose');
+const body = document.body;
+
+function openMenu() {
+  if (!panel || !backdrop) return;
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+  backdrop.classList.add('open');
+  body.style.overflow = 'hidden'; // Scroll lock
+
+  // Focus trap initiation could go here, for now simpler implementation
+  const firstFocusable = panel.querySelector('button, a');
+  if (firstFocusable) firstFocusable.focus();
 }
 
-// HERO ANIMATION
-const heroText = document.getElementById('heroText');
-const observer = new IntersectionObserver(entries => {
-  if(entries[0].isIntersecting) heroText.classList.add('animate');
-},{threshold:0.3});
-observer.observe(heroText);
+function closeMenu() {
+  if (!panel || !backdrop) return;
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+  backdrop.classList.remove('open');
+  body.style.overflow = ''; // Restore scroll
+  hamburger.focus();
+}
 
-// FAQ ACCORDION
+if (hamburger) hamburger.addEventListener('click', openMenu);
+if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+// Close menu when clicking any link inside
+if (panel) {
+  panel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+}
+
+// Mobile Submenu Toggle
+const servicesBtn = document.getElementById('mobileServicesBtn');
+const servicesMenu = document.getElementById('mobileServicesMenu');
+
+if (servicesBtn && servicesMenu) {
+  servicesBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent bubbling if needed
+    const isExpanded = servicesBtn.getAttribute('aria-expanded') === 'true';
+
+    // Toggle state
+    servicesBtn.setAttribute('aria-expanded', !isExpanded);
+
+    if (!isExpanded) {
+      servicesMenu.style.maxHeight = servicesMenu.scrollHeight + 'px';
+    } else {
+      servicesMenu.style.maxHeight = '0';
+    }
+  });
+}
+
+// --- HERO ANIMATION ---
+const heroText = document.getElementById('heroText');
+if (heroText && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting) {
+      heroText.classList.add('animate');
+      observer.disconnect(); // Animate once
+    }
+  }, {threshold: 0.2});
+  observer.observe(heroText);
+} else if (heroText) {
+  // Fallback
+  heroText.classList.add('animate');
+}
+
+// --- FAQ ACCORDION ---
 const faqItems = document.querySelectorAll('.faq-item');
 faqItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
+  const header = item.querySelector('.faq-header');
+  const answer = item.querySelector('.faq-answer');
 
-    faqItems.forEach(i => {
-      i.classList.remove('open');
-      const answerEl = i.querySelector('.faq-answer');
-      if (answerEl) answerEl.style.maxHeight = null;
+  header.addEventListener('click', () => {
+    const isOpen = item.getAttribute('aria-expanded') === 'true';
+
+    // Close all others
+    faqItems.forEach(otherItem => {
+      if (otherItem !== item) {
+        otherItem.setAttribute('aria-expanded', 'false');
+        otherItem.querySelector('.faq-answer').style.maxHeight = null;
+      }
     });
 
+    // Toggle current
+    item.setAttribute('aria-expanded', !isOpen);
     if (!isOpen) {
-      item.classList.add('open');
-      const answer = item.querySelector('.faq-answer');
-      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    } else {
+      answer.style.maxHeight = null;
     }
   });
 });

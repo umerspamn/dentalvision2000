@@ -8,6 +8,10 @@
 *   **Doctors Cards:**
     *   **Issue:** Weak overlay, text hard to read on some images, old design.
     *   **Fix:** Redesigned with full-height background image and strong bottom gradient overlay for readability. Added hover lift effect.
+*   **Image Options for Cards:**
+    *   **Feature Cards:** Added CSS support for `background-image` with a text-readability overlay (`::before` gradient).
+    *   **Service Cards:** Added `.service-img` class to allow adding top images to service cards.
+    *   **Review Cards:** Updated structure to `.review-footer` and added `.review-avatar` styling to allow user photos.
 *   **Layout & Spacing:**
     *   **Issue:** Extensive use of `<br>` tags for spacing; inconsistent margins.
     *   **Fix:** Removed all `<br>` layout hacks. Used CSS `gap`, `margin-bottom`, and utility classes.
@@ -29,7 +33,7 @@
 4.  **Submenu:** Tap "Services" in mobile menu. Verify it expands smoothly and arrow rotates.
 5.  **Navigation:** Click a link in the mobile menu (e.g., "Meet the Doctors"). Verify menu closes and page navigates.
 6.  **Doctors Cards:** Hover over a doctor card (desktop) or look at it (mobile). Verify text is readable against the photo background.
-7.  **WhatsApp:** Tap the floating WhatsApp button. Verify it opens WhatsApp in a new tab.
-8.  **FAQ:** Tap an FAQ item. Verify it expands and others collapse (if multiple open logic is set to exclusive, which it is).
-9.  **Responsiveness:** Resize browser to 360px width. Verify no horizontal scrolling and content stacks correctly.
-10. **Keyboard Nav:** Tab through the page. Verify focus ring is visible on all interactive elements.
+7.  **Feature/Service Images:** Verify CSS classes allow adding images (tested via script).
+8.  **WhatsApp:** Tap the floating WhatsApp button. Verify it opens WhatsApp in a new tab.
+9.  **FAQ:** Tap an FAQ item. Verify it expands and others collapse.
+10. **Responsiveness:** Resize browser to 360px width. Verify no horizontal scrolling and content stacks correctly.

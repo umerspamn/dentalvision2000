@@ -1,950 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dental Treatments at DentalVision2000</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #0b7bbf;
-      --primary-dark: #075580;
-      --primary-light: #e6f3fb;
-      --bg: #f5f7fb;
-      --text-main: #1d2939;
-      --text-muted: #667085;
-      --border-subtle: #d0d5dd;
-      --whatsapp: #25d366;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
-      --radius-lg: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(1120px, 100% - 2.5rem);
-      margin: 0 auto;
-    }
-
-    
-
-    /* Navbar */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem 0;
-      gap: 1.25rem;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: 0.06em;
-      color: var(--primary-dark);
-      text-transform: uppercase;
-      padding: 0.25rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(11, 123, 191, 0.18);
-      background: radial-gradient(circle at top left, rgba(11, 123, 191, 0.14), transparent 60%), #ffffff;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 1.75rem;
-      font-size: 0.95rem;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .nav-link {
-      color: #475467;
-      font-weight: 500;
-      position: relative;
-      padding: 0.25rem 0;
-      transition: color 0.18s ease-out;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -0.35rem;
-      width: 0;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--primary);
-      transition: width 0.18s ease-out;
-    }
-
-    .nav-link:hover::after {
-      width: 70%;
-    }
-
-    .nav-link.active {
-      color: var(--primary-dark);
-    }
-
-    .nav-link.active::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(11, 123, 191, 0.35);
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: #ffffff;
-      background: linear-gradient(135deg, #0b7bbf, #0ea5e9);
-      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.35);
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-    }
-
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      width: 20px;
-      height: 2px;
-      background: #111827;
-      border-radius: 999px;
-    }
-
-    /* Mobile menu */
-    .mobile-menu {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      display: none;
-      z-index: 40;
-    }
-
-    .mobile-menu-panel {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: min(260px, 80%);
-      height: 100%;
-      background: #ffffff;
-      box-shadow: -20px 0 45px rgba(15, 23, 42, 0.4);
-      padding: 1.5rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .mobile-menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mobile-close {
-      border: none;
-      background: none;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #111827;
-    }
-
-    .mobile-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-top: 1rem;
-      font-size: 0.98rem;
-    }
-
-    .mobile-links a {
-      color: #111827;
-      font-weight: 500;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 3rem 0 2.5rem;
-    }
-
-    .hero-inner {
-      background: radial-gradient(circle at top left, rgba(11, 123, 191, 0.14), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 60%),
-                  #ffffff;
-      border-radius: 26px;
-      padding: 2.75rem 2.5rem;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-text {
-      max-width: 560px;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      padding: 0.15rem 0.6rem;
-      border-radius: 999px;
-      background: rgba(11, 123, 191, 0.08);
-      color: #075985;
-      margin-bottom: 0.85rem;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 3vw, 2.4rem);
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
-      color: #0f172a;
-    }
-
-    .hero-subtitle {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 480px;
-      margin-bottom: 1.8rem;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.4rem;
-      border-radius: 999px;
-      background: var(--whatsapp);
-      color: #ffffff;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      font-size: 0.98rem;
-      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35);
-    }
-
-    .hero-cta span.icon {
-      font-size: 1.1rem;
-    }
-
-    .hero-note {
-      margin-top: 0.85rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* Services grid */
-    .section {
-      padding: 2.75rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 1.75rem;
-    }
-
-    .section-kicker {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #64748b;
-      margin-bottom: 0.3rem;
-    }
-
-    .section-title {
-      font-size: 1.6rem;
-      margin-bottom: 0.4rem;
-      color: #0f172a;
-    }
-
-    .section-subtitle {
-      font-size: 0.96rem;
-      color: var(--text-muted);
-      max-width: 540px;
-      margin: 0 auto;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .service-card {
-      background:
-        radial-gradient(circle at top left, rgba(11, 123, 191, 0.06), transparent 55%),
-        #ffffff;
-      border-radius: 20px;
-      padding: 1.5rem 1.5rem 1.25rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      position: relative;
-      overflow: hidden;
-      min-height: 260px;
-    }
-
-    .service-chip {
-      font-size: 0.78rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(11, 123, 191, 0.08);
-      color: #075985;
-      align-self: flex-start;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 600;
-    }
-
-    .service-title {
-      font-size: 1.12rem;
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .service-desc {
-      font-size: 0.94rem;
-      color: var(--text-muted);
-    }
-
-    .service-list {
-      font-size: 0.88rem;
-      color: #4b5563;
-      padding-left: 1.1rem;
-    }
-
-    .service-list li {
-      margin-bottom: 0.25rem;
-    }
-
-    .service-footer {
-      margin-top: 0.9rem;
-      padding-top: 0.65rem;
-      border-top: 1px dashed rgba(148, 163, 184, 0.7);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.88rem;
-    }
-
-    .service-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: var(--primary-dark);
-      font-weight: 500;
-    }
-
-    .service-pill {
-      font-size: 0.78rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      background: var(--primary-light);
-      color: #0f172a;
-    }
-
-    .service-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(11, 123, 191, 0.18), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.22s ease-out;
-      pointer-events: none;
-    }
-
-    .service-card:hover::before {
-      opacity: 1;
-    }
-
-    .service-card:hover {
-      border-color: rgba(11, 123, 191, 0.7);
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
-      transform: translateY(-4px);
-      transition: all 0.22s ease-out;
-    }
-
-    /* Info / FAQ block */
-    .info-block {
-      background: linear-gradient(135deg, rgba(11, 123, 191, 0.08), rgba(34, 197, 94, 0.03));
-      border-radius: 24px;
-      padding: 2rem 1.75rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-      gap: 1.5rem;
-      align-items: center;
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.18);
-    }
-
-    .info-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.4rem;
-      color: #0f172a;
-    }
-
-    .info-text {
-      font-size: 0.95rem;
-      color: #334155;
-      margin-bottom: 0.75rem;
-    }
-
-    .info-list {
-      font-size: 0.9rem;
-      color: #1e293b;
-      padding-left: 1.1rem;
-    }
-
-    .info-list li {
-      margin-bottom: 0.3rem;
-    }
-
-    .info-cta {
-      display: flex;
-      justify-content: flex-start;
-    }
-
-    .info-whatsapp-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.65rem 1.2rem;
-      border-radius: 999px;
-      background: var(--whatsapp);
-      color: #ffffff;
-      border: none;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 3rem;
-      background: #020617;
-      color: #e5e7eb;
-      padding: 2.75rem 0 1.5rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-list {
-      list-style: none;
-      font-size: 0.88rem;
-      color: #9ca3af;
-    }
-
-    .footer-list li + li {
-      margin-top: 0.25rem;
-    }
-
-    .footer-list a:hover {
-      color: #e5e7eb;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(148, 163, 184, 0.35);
-      padding-top: 0.9rem;
-      font-size: 0.8rem;
-      color: #9ca3af;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* Floating WhatsApp */
-    .whatsapp-float {
-      position: fixed;
-      right: 1.25rem;
-      bottom: 1.25rem;
-      z-index: 60;
-    }
-
-    .whatsapp-fab {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      border: none;
-      background: #25d366;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .whatsapp-fab span {
-      font-size: 1.6rem;
-    }
-
-    @media (max-width: 768px) {
-      .top-bar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.2rem;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .hero-inner {
-        padding: 2rem 1.5rem;
-      }
-
-      .info-block {
-        grid-template-columns: 1fr;
-      }
-
-      .whatsapp-float {
-        right: 1rem;
-        bottom: 1rem;
-      }
-    }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .hero-inner {
-        padding: 2rem 1.5rem;
-      }
-
-      .info-block {
-        grid-template-columns: 1fr;
-      }
-
-      .whatsapp-float {
-        right: 1rem;
-        bottom: 1rem;
-      }
-    
-  </style>
-</head>
-<body>
-  
-
-  <!-- Header & Navbar -->
-  <header>
-    <div class="container nav-inner">
-      <div class="logo">DentalVision2000</div>
-      <nav>
-        <div class="nav-links">
-          <!-- TODO: update hrefs to actual file paths -->
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="doctors.html" class="nav-link">Meet the Doctors</a>
-          <a href="services.html" class="nav-link active">Services</a>
-          <a href="consultation.html" class="nav-link">Consultation</a>
-        </div>
-        <a href="https://wa.me/923212073839" target="_blank" rel="noopener" class="nav-cta">
-          <span>Book on WhatsApp</span>
-        </a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <div class="mobile-menu-panel">
-      <div class="mobile-menu-header">
-        <div class="logo">DentalVision2000</div>
-        <button class="mobile-close" id="mobileClose" aria-label="Close navigation menu">&times;</button>
-      </div>
-      <div class="mobile-links">
-        <!-- TODO: update hrefs to actual file paths -->
-        <a href="index.html">Home</a>
-        <a href="doctors.html">Meet the Doctors</a>
-        <a href="services.html">Services</a>
-        <a href="consultation.html">Consultation</a>
-        <a href="https://wa.me/923212073839" target="_blank" rel="noopener">Book on WhatsApp</a>
-      </div>
-    </div>
-  </div>
-
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-inner">
-          <div class="hero-text">
-            <div class="hero-eyebrow">
-              <span>Our Treatments</span>
-            </div>
-            <h1 class="hero-title">Dental Treatments at DentalVision2000</h1>
-            <p class="hero-subtitle">Simple explanations. Transparent treatment options designed for your whole family, from routine cleaning to full smile makeovers.</p>
-            <a href="https://wa.me/923212073839" target="_blank" rel="noopener" class="hero-cta">
-              <span class="icon">💬</span>
-              <span>Book on WhatsApp</span>
-            </a>
-            <p class="hero-note">Send us a message with your concern and we’ll help you choose the right treatment.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Grid -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <p class="section-kicker">Treatments we offer</p>
-          <h2 class="section-title">Everything your family needs in one clinic</h2>
-          <p class="section-subtitle">From emergency pain relief to long-term smile improvements, these treatments are explained in simple language so you can make clear decisions.</p>
-        </div>
-
-        <div class="services-grid">
-          <!-- Root Canal -->
-          <article class="service-card">
-            <span class="service-chip">Pain relief</span>
-            <h3 class="service-title">Root Canal Treatment</h3>
-            <p class="service-desc">Saves an infected tooth so you don’t have to remove it. Designed to remove pain, not cause it.</p>
-            <ul class="service-list">
-              <li>Deep decay or severe toothache</li>
-              <li>Sensitivity to hot and cold</li>
-              <li>Swelling or tenderness around the tooth</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-root-canal.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Keeps your natural tooth</span>
-            </div>
-          </article>
-
-          <!-- Implants -->
-          <article class="service-card">
-            <span class="service-chip">Missing teeth</span>
-            <h3 class="service-title">Dental Implants</h3>
-            <p class="service-desc">A fixed, long-term solution to replace missing teeth so you can chew and smile confidently again.</p>
-            <ul class="service-list">
-              <li>Single or multiple missing teeth</li>
-              <li>Improved chewing and speech</li>
-              <li>Prevents jawbone thinning over time</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-implants.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Fixed replacement</span>
-            </div>
-          </article>
-
-          <!-- Invisible Aligners -->
-          <article class="service-card">
-            <span class="service-chip">Smile alignment</span>
-            <h3 class="service-title">Invisible Aligners</h3>
-            <p class="service-desc">Clear trays that gently straighten teeth without metal braces, so adults and teens can smile freely.</p>
-            <ul class="service-list">
-              <li>Crooked or crowded teeth</li>
-              <li>Gaps between teeth</li>
-              <li>Removable for eating and brushing</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-invisible-aligners.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Discreet option</span>
-            </div>
-          </article>
-
-          <!-- Scaling & Polishing -->
-          <article class="service-card">
-            <span class="service-chip">Cleaning</span>
-            <h3 class="service-title">Scaling &amp; Polishing</h3>
-            <p class="service-desc">Professional cleaning to remove plaque and tartar that brushing alone cannot reach.</p>
-            <ul class="service-list">
-              <li>Freshens breath</li>
-              <li>Helps prevent gum disease</li>
-              <li>Makes teeth feel smoother and cleaner</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-scaling-polishing.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Routine care</span>
-            </div>
-          </article>
-
-          <!-- Teeth Whitening -->
-          <article class="service-card">
-            <span class="service-chip">Cosmetic</span>
-            <h3 class="service-title">Teeth Whitening</h3>
-            <p class="service-desc">Brightens stained or dull teeth safely under a dentist’s supervision for a more confident smile.</p>
-            <ul class="service-list">
-              <li>Tea, coffee or smoking stains</li>
-              <li>Quick in-clinic sessions</li>
-              <li>Guidance to maintain results</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-teeth-whitening.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Brighter smile</span>
-            </div>
-          </article>
-
-          <!-- Dental Fillings -->
-          <article class="service-card">
-            <span class="service-chip">Cavity repair</span>
-            <h3 class="service-title">Dental Fillings</h3>
-            <p class="service-desc">Repairs small to medium cavities before they turn into bigger, painful problems.</p>
-            <ul class="service-list">
-              <li>Fixes decay early</li>
-              <li>Restores shape and function</li>
-              <li>Tooth-coloured options available</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-dental-fillings.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Stops decay spreading</span>
-            </div>
-          </article>
-
-          <!-- Crowns & Bridges -->
-          <article class="service-card">
-            <span class="service-chip">Tooth coverage</span>
-            <h3 class="service-title">Crowns &amp; Bridges</h3>
-            <p class="service-desc">Covers or replaces damaged teeth to restore chewing and appearance.</p>
-            <ul class="service-list">
-              <li>Protects weak or cracked teeth</li>
-              <li>Replaces one or more missing teeth</li>
-              <li>Can be matched to your tooth shade</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-crowns-bridges.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Stronger bite</span>
-            </div>
-          </article>
-
-          <!-- Gum Treatment -->
-          <article class="service-card">
-            <span class="service-chip">Gum health</span>
-            <h3 class="service-title">Gum Treatment</h3>
-            <p class="service-desc">Treats bleeding, swollen or infected gums to protect the foundation of your teeth.</p>
-            <ul class="service-list">
-              <li>Helps control gum disease</li>
-              <li>Reduces bleeding and sensitivity</li>
-              <li>Supports fresher breath</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-gum-treatment.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Healthier gums</span>
-            </div>
-          </article>
-
-          <!-- Full Mouth Rehabilitation -->
-          <article class="service-card">
-            <span class="service-chip">Comprehensive</span>
-            <h3 class="service-title">Full Mouth Rehabilitation</h3>
-            <p class="service-desc">A planned combination of treatments for patients who need major repair or a full smile rebuild.</p>
-            <ul class="service-list">
-              <li>Multiple missing or damaged teeth</li>
-              <li>Difficulty chewing on both sides</li>
-              <li>Customized long-term plan</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-full-mouth-rehab.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Smile makeover plan</span>
-            </div>
-          </article>
-
-          <!-- Emergency Dental Care -->
-          <article class="service-card">
-            <span class="service-chip">Urgent care</span>
-            <h3 class="service-title">Emergency Dental Care</h3>
-            <p class="service-desc">Quick help for sudden toothache, broken teeth or swelling so you’re not left in pain.</p>
-            <ul class="service-list">
-              <li>Severe toothache</li>
-              <li>Broken or knocked-out teeth</li>
-              <li>Facial swelling or infection</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-emergency.html" class="service-link">View details ↗</a>
-              <span class="service-pill">Same-day focus</span>
-            </div>
-          </article>
-
-          <!-- Pediatric Dentistry -->
-          <article class="service-card">
-            <span class="service-chip">Kids</span>
-            <h3 class="service-title">Pediatric Dentistry</h3>
-            <p class="service-desc">Gentle care for children’s teeth, from first visits to cavity fillings and preventive sealants.</p>
-            <ul class="service-list">
-              <li>Friendly, child-focused approach</li>
-              <li>Helps build good brushing habits</li>
-              <li>Guidance for parents</li>
-            </ul>
-            <div class="service-footer">
-              <a href="service-pediatric.html" class="service-link">View details ↗</a>
-              <span class="service-pill">For growing smiles</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Info / FAQ style block -->
-    <section class="section">
-      <div class="container">
-        <div class="info-block">
-          <div>
-            <h3 class="info-title">Not sure which treatment you need?</h3>
-            <p class="info-text">You don’t have to decide everything on your own. Come in for a simple check-up, or send us a message, and we’ll guide you step by step.</p>
-            <ul class="info-list">
-              <li>Describe your pain or concern in your own words.</li>
-              <li>Our dentist explains what is urgent and what can wait.</li>
-              <li>Together, we choose a plan that matches your budget and comfort.</li>
-            </ul>
-          </div>
-          <div class="info-cta">
-            <a href="https://wa.me/923212073839" target="_blank" rel="noopener" class="info-whatsapp-btn">
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 3C9.383 3 4 8.383 4 15c0 2.704.86 5.215 2.328 7.262L4 29l7.012-2.262C12.215 27.14 14.408 27.75 16 27.75c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22c-1.426 0-3.07-.543-4.238-1.184l-.303-.164-4.16 1.34 1.359-4.055-.198-.316A9.02 9.02 0 0 1 7 15c0-4.963 4.037-9 9-9s9 4.037 9 9-4.037 9-9 9zm5.02-6.438c-.273-.137-1.617-.797-1.867-.887-.25-.09-.43-.137-.61.137-.18.273-.7.887-.86 1.07-.16.18-.32.205-.593.068-.273-.137-1.152-.425-2.194-1.356-.81-.72-1.36-1.61-1.52-1.883-.16-.273-.018-.42.12-.557.125-.124.273-.32.41-.48.137-.16.182-.273.273-.457.09-.18.045-.34-.022-.48-.068-.137-.61-1.47-.837-2.016-.22-.528-.445-.456-.61-.465-.16-.008-.34-.01-.52-.01-.18 0-.48.068-.73.34-.25.273-.957.933-.957 2.27 0 1.34.98 2.63 1.12 2.82.137.18 1.93 2.953 4.88 4.14.682.293 1.214.468 1.628.598.684.217 1.305.187 1.797.113.547-.082 1.617-.66 1.846-1.297.23-.637.23-1.184.16-1.297-.068-.113-.25-.182-.523-.32z" fill="#fff"/></svg>
-              <span>Chat on WhatsApp</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h4 class="footer-title">Contact</h4>
-          <ul class="footer-list">
-            <li>DentalVision2000</li>
-            <li>Plot R 1233, Federal B Area Block 15</li>
-            <li>Gulberg Town, Karachi</li>
-            <li><a href="tel:+923212073839">Phone: 0321-2073839</a></li>
-            <li><a href="#">Open in Google Maps</a> <!-- TODO: replace with real maps link --></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="footer-title">Services</h4>
-          <ul class="footer-list">
-            <li><a href="service-root-canal.html">Root Canal Treatment</a></li>
-            <li><a href="service-implants.html">Dental Implants</a></li>
-            <li><a href="service-invisible-aligners.html">Invisible Aligners</a></li>
-            <li><a href="service-scaling-polishing.html">Scaling &amp; Polishing</a></li>
-            <li><a href="service-teeth-whitening.html">Teeth Whitening</a></li>
-            <li><a href="service-dental-fillings.html">Dental Fillings</a></li>
-            <li><a href="service-crowns-bridges.html">Crowns &amp; Bridges</a></li>
-            <li><a href="service-gum-treatment.html">Gum Treatment</a></li>
-            <li><a href="service-full-mouth-rehab.html">Full Mouth Rehabilitation</a></li>
-            <li><a href="service-emergency.html">Emergency Dental Care</a></li>
-            <li><a href="service-pediatric.html">Pediatric Dentistry</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="footer-title">Service Hours</h4>
-          <ul class="footer-list">
-            <li>Monday – Saturday: 11:00 AM – 9:00 PM</li>
-            <li>Sunday: CLOSED</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© DentalVision2000. All rights reserved.</span>
-        <span>Website layout under development.</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Floating WhatsApp button -->
-  <div class="whatsapp-float">
-    <button class="whatsapp-fab" id="whatsappFab" aria-label="Chat on WhatsApp">
-      <span>💬</span>
-    </button>
-  </div>
-
-  <script>
-    // Mobile nav toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileClose = document.getElementById('mobileClose');
-
-    function openMobileMenu() {
-      mobileMenu.style.display = 'block';
-      mobileMenu.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeMobileMenu() {
-      mobileMenu.style.display = 'none';
-      mobileMenu.setAttribute('aria-hidden', 'true');
-    }
-
-    hamburger.addEventListener('click', openMobileMenu);
-    mobileClose.addEventListener('click', closeMobileMenu);
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) closeMobileMenu();
-    });
-
-    // Floating WhatsApp
-    const whatsappFab = document.getElementById('whatsappFab');
-    whatsappFab.addEventListener('click', () => {
-      window.open('https://wa.me/923212073839', '_blank', 'noopener');
-    });
-  </script>
-</body>
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dental Vision 2000 – Where Smiles Shine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FAFEFF;
+    --pearl: #F0F8FF;
+    --enamel: #E8F4FD;
+    --gum-red: #C0392B;
+    --gum-red2: #A93226;
+    --gum-pink: #E8637A;
+    --gum-light: #F4A7B5;
+    --gum-pale: #FDE8EC;
+    --mint: #00BFA5;
+    --toothpaste-blue: #1976D2;
+    --deep: #0D1B2A;
+    --mid: #344a5e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--pearl);color:var(--deep);overflow-x:hidden;cursor:none;}
+
+  /* ══ CURSOR ══ */
+  .cursor{width:20px;height:20px;border:2px solid var(--gum-red);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,border-color .3s,background .3s;}
+  .cursor-dot{width:6px;height:6px;background:var(--gum-red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+
+  /* ══ PARTICLES ══ */
+  .particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .particle{position:absolute;opacity:0;animation:floatUp linear infinite;}
+  @keyframes floatUp{0%{transform:translateY(110vh) rotate(0deg);opacity:0}10%{opacity:.16}90%{opacity:.16}100%{transform:translateY(-20vh) rotate(360deg);opacity:0}}
+
+  /* ══ LOADER ══ */
+  .page-loader{position:fixed;inset:0;z-index:99999;background:white;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;transition:opacity .6s,visibility .6s;}
+  .page-loader.hidden{opacity:0;visibility:hidden;}
+  .loader-tooth{width:60px;height:70px;animation:toothSpin 1s linear infinite;}
+  @keyframes toothSpin{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.1)}to{transform:rotate(360deg) scale(1)}}
+  .loader-text{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gum-red);animation:fadeToggle 1s ease-in-out infinite;}
+  @keyframes fadeToggle{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* ══ NAVBAR ══ */
+  nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(250,254,255,.95);backdrop-filter:blur(20px);border-bottom:3px solid var(--gum-pink);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .nav-tooth-logo{width:42px;height:50px;animation:toothBounce 2s ease-in-out infinite;}
+  @keyframes toothBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;color:var(--deep);line-height:1.1;}
+  .nav-logo-text span{color:var(--gum-red);}
+  .nav-links{display:flex;gap:1.8rem;list-style:none;}
+  .nav-links a{text-decoration:none;color:var(--deep);font-size:.88rem;font-weight:500;position:relative;padding-bottom:3px;}
+  .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gum-red);transition:width .3s;border-radius:2px;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{background:var(--gum-red);color:white;border:none;padding:10px 22px;border-radius:40px 40px 30px 30px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:none;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 15px rgba(192,57,43,.3);}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(192,57,43,.4);}
+
+  /* ══ HERO ══ */
+  #hero{min-height:100vh;background:linear-gradient(160deg,#fff 0%,var(--enamel) 50%,var(--gum-pale) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:72px;}
+  .hero-content{text-align:center;z-index:2;max-width:820px;padding:2rem;animation:heroEntrance 1.2s cubic-bezier(.16,1,.3,1) both;}
+  @keyframes heroEntrance{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
+  .hero-badge{display:inline-block;background:var(--gum-pale);color:var(--gum-red);padding:6px 18px;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.06em;margin-bottom:1.4rem;border:1px solid var(--gum-light);animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,99,122,.3)}50%{box-shadow:0 0 0 8px rgba(232,99,122,0)}}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,7vw,5.2rem);font-weight:900;line-height:1.05;color:var(--deep);margin-bottom:1.4rem;}
+  .hero-title .accent{color:var(--gum-red);display:block;}
+  .hero-sub{font-size:1.05rem;color:#666;max-width:480px;margin:0 auto 1rem;line-height:1.75;}
+  .hero-phone-badge{display:inline-flex;align-items:center;gap:.5rem;background:white;border:2px solid var(--gum-light);border-radius:30px;padding:8px 20px;font-size:.9rem;font-weight:600;color:var(--gum-red);margin-bottom:2rem;box-shadow:0 4px 15px rgba(192,57,43,.1);}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:var(--gum-red);color:white;border:none;padding:15px 34px;border-radius:50px 50px 40px 40px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.95rem;cursor:none;transition:all .3s;box-shadow:0 6px 20px rgba(192,57,43,.35);}
+  .btn-primary:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 30px rgba(192,57,43,.4);}
+  .btn-secondary{background:transparent;color:var(--deep);border:2px solid var(--gum-pink);padding:13px 32px;border-radius:50px 50px 40px 40px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.95rem;cursor:none;transition:all .3s;}
+  .btn-secondary:hover{background:var(--gum-pale);transform:translateY(-3px);}
+
+  /* ══ TEETH ROW ══ */
+  .hero-gum{position:absolute;bottom:0;left:0;right:0;height:60px;background:var(--gum-red);border-radius:50% 50% 0 0/100% 100% 0 0;}
+  .hero-teeth-row{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;align-items:flex-end;gap:4px;padding:0 3%;animation:teethSlideUp 1s .5s cubic-bezier(.16,1,.3,1) both;}
+  @keyframes teethSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .big-tooth{background:white;border:2px solid #ddd;position:relative;z-index:2;box-shadow:0 -4px 15px rgba(0,0,0,.1);transition:transform .3s;}
+  .big-tooth:hover{transform:translateY(-10px);}
+  .big-tooth::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:28%;height:38%;background:rgba(200,230,255,.4);border-radius:50%;filter:blur(4px);}
+  .tooth-incisor{width:52px;height:82px;border-radius:8px 8px 40% 40%/8px 8px 60% 60%;}
+  .tooth-canine{width:42px;height:92px;border-radius:6px 6px 35% 50%/6px 6px 70% 80%;}
+  .tooth-premolar{width:48px;height:72px;border-radius:8px 8px 40% 40%/8px 8px 55% 55%;}
+  .tooth-molar{width:62px;height:62px;border-radius:10px 10px 35% 35%/10px 10px 50% 50%;}
+
+  /* ══ MARQUEE ══ */
+  .marquee-wrap{background:var(--gum-red);padding:11px 0;overflow:hidden;}
+  .marquee-track{display:flex;gap:3rem;animation:marqueeScroll 22s linear infinite;white-space:nowrap;}
+  @keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .marquee-item{color:white;font-size:.84rem;font-weight:500;letter-spacing:.05em;flex-shrink:0;}
+
+  /* ══ SECTION BASE ══ */
+  section{padding:90px 5%;position:relative;}
+  .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;text-align:center;margin-bottom:.4rem;}
+  .section-title span{color:var(--gum-red);}
+  .section-sub{text-align:center;color:#777;font-size:.98rem;margin-bottom:3.5rem;max-width:520px;margin-left:auto;margin-right:auto;margin-top:.5rem;line-height:1.7;}
+
+  /* ══ DENTAL CHAIR HERO IMAGE STRIP ══ */
+  .clinic-img-strip{background:var(--deep);padding:0;overflow:hidden;position:relative;height:380px;}
+  .clinic-img-strip img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:transform 8s ease;}
+  .clinic-img-strip:hover img{transform:scale(1.04);}
+  .clinic-img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,42,.7) 0%,rgba(13,27,42,.2) 60%,transparent 100%);display:flex;align-items:center;padding:0 7%;}
+  .clinic-img-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;color:white;line-height:1.2;margin-bottom:.8rem;}
+  .clinic-img-text h2 em{color:var(--gum-light);font-style:italic;}
+  .clinic-img-text p{color:rgba(255,255,255,.7);font-size:.95rem;max-width:380px;line-height:1.7;}
+
+  /* ══ SERVICES ══ */
+  #services{background:white;}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.8rem;max-width:1100px;margin:0 auto;}
+  .service-card{background:var(--pearl);border-radius:50% 50% 45% 45%/30% 30% 60% 60%;padding:2.8rem 1.4rem 2.2rem;text-align:center;border:2px solid #e8e8e8;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,background .3s;cursor:none;}
+  .service-card::before{content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:60%;height:6px;background:linear-gradient(90deg,transparent,rgba(200,230,255,.8),transparent);border-radius:3px;}
+  .service-card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 20px 50px rgba(192,57,43,.15);border-color:var(--gum-pink);background:var(--gum-pale);}
+  .service-card .icon{font-size:2.4rem;margin-bottom:.9rem;display:block;animation:iconFloat 3s ease-in-out infinite;}
+  @keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .service-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--deep);}
+  .service-card p{font-size:.86rem;color:#666;line-height:1.6;}
+
+  /* ══ PHOTO GALLERY (3 treatment photos) ══ */
+  #gallery{background:var(--enamel);padding:90px 5%;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1100px;margin:0 auto;}
+  .gallery-item{border-radius:20px 20px 50% 50%/20px 20px 30% 30%;overflow:hidden;position:relative;aspect-ratio:3/4;border:3px solid #ddd;box-shadow:0 8px 30px rgba(0,0,0,.1);transition:transform .4s,box-shadow .4s,border-color .3s;cursor:none;}
+  .gallery-item:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 20px 50px rgba(192,57,43,.18);border-color:var(--gum-pink);}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+  .gallery-item:hover img{transform:scale(1.08);}
+  .gallery-item-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(192,57,43,.85));padding:1.5rem 1rem 1rem;color:white;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-align:center;}
+  .gallery-item::before{content:'';position:absolute;top:10px;left:20%;right:30%;height:20%;background:rgba(255,255,255,.25);border-radius:50%;filter:blur(8px);transform:rotate(-15deg);z-index:1;}
+
+  /* ══ DIVIDER ══ */
+  .toothpaste-divider{width:100%;height:12px;background:repeating-linear-gradient(90deg,var(--gum-red) 0%,var(--gum-red) 30%,white 30%,white 35%,var(--mint) 35%,var(--mint) 65%,white 65%,white 70%,var(--toothpaste-blue) 70%,var(--toothpaste-blue) 100%);opacity:.55;}
+
+  /* ══ ABOUT ══ */
+  #about{background:linear-gradient(135deg,var(--deep) 0%,#1a2a3a 100%);color:white;overflow:hidden;}
+  #about .section-title{color:white;}
+  #about .section-sub{color:rgba(255,255,255,.55);}
+  .toothbrush-container{max-width:940px;margin:0 auto;display:flex;align-items:center;gap:4rem;}
+  .brush-wrap{flex-shrink:0;animation:brushScrub 2s ease-in-out infinite;}
+  @keyframes brushScrub{0%,100%{transform:rotate(-5deg) translateX(0)}50%{transform:rotate(5deg) translateX(10px)}}
+  .about-text h2{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;margin-bottom:1rem;line-height:1.2;}
+  .about-text h2 span{color:var(--gum-light);}
+  .about-text p{color:rgba(255,255,255,.72);line-height:1.8;margin-bottom:1rem;font-size:.95rem;}
+  .about-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gum-light);display:block;}
+  .stat-label{font-size:.78rem;color:rgba(255,255,255,.45);}
+
+  /* ══ X-RAY SECTION ══ */
+  .xray-section{background:var(--deep);padding:70px 5%;overflow:hidden;}
+  .xray-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:3rem;}
+  .xray-img-wrap{flex-shrink:0;width:320px;border-radius:20px 20px 50% 50%/20px 20px 30% 30%;overflow:hidden;border:3px solid rgba(255,255,255,.15);box-shadow:0 0 40px rgba(0,191,165,.2);position:relative;animation:xrayPulse 3s ease-in-out infinite;}
+  @keyframes xrayPulse{0%,100%{box-shadow:0 0 40px rgba(0,191,165,.2)}50%{box-shadow:0 0 70px rgba(0,191,165,.45)}}
+  .xray-img-wrap img{width:100%;display:block;filter:brightness(.9) contrast(1.1);}
+  .xray-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(0,191,165,.15));pointer-events:none;}
+  .xray-text{color:white;}
+  .xray-text h3{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:1rem;color:var(--mint);}
+  .xray-text p{color:rgba(255,255,255,.68);line-height:1.8;font-size:.95rem;margin-bottom:1rem;}
+  .xray-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,191,165,.15);border:1px solid rgba(0,191,165,.4);color:var(--mint);padding:6px 16px;border-radius:20px;font-size:.8rem;font-weight:600;}
+
+  /* ══ TESTIMONIALS ══ */
+  #testimonials{background:var(--enamel);}
+  .testimonials-scroll{display:flex;gap:1.5rem;max-width:1100px;margin:0 auto;overflow-x:auto;padding-bottom:1rem;scrollbar-width:none;}
+  .testimonials-scroll::-webkit-scrollbar{display:none;}
+  .testimonial-tube{flex-shrink:0;width:265px;background:white;position:relative;padding:2.2rem 1.4rem 1.4rem;border-radius:60% 60% 20px 20px/40% 40% 20px 20px;box-shadow:0 8px 30px rgba(0,0,0,.08);border-top:4px solid var(--toothpaste-blue);border-left:2px solid #e0e0e0;border-right:2px solid #e0e0e0;transition:transform .3s;cursor:none;overflow:hidden;}
+  .testimonial-tube::before{content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:40px;height:22px;background:var(--toothpaste-blue);border-radius:4px 4px 0 0;clip-path:polygon(10% 100%,90% 100%,100% 0%,0% 0%);}
+  .tube-stripe{position:absolute;top:0;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,var(--toothpaste-blue) 0px,var(--toothpaste-blue) 20px,white 20px,white 24px,var(--mint) 24px,var(--mint) 44px,white 44px,white 48px);border-radius:60% 60% 0 0/40% 40% 0 0;opacity:.4;}
+  .testimonial-tube:hover{transform:translateY(-8px) rotate(-1deg);}
+  .testimonial-stars{color:#FFB300;font-size:1rem;margin-bottom:.7rem;letter-spacing:2px;}
+  .testimonial-text{font-size:.86rem;color:#555;line-height:1.7;margin-bottom:1rem;font-style:italic;}
+  .testimonial-author{font-weight:600;font-size:.84rem;color:var(--deep);}
+  .testimonial-tag{font-size:.73rem;color:var(--gum-red);}
+
+  /* ══ TEAM ══ */
+  #team{background:white;}
+  .team-grid{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;max-width:700px;margin:0 auto;}
+  .doctor-card{width:240px;text-align:center;}
+  .doctor-avatar{width:180px;height:220px;margin:0 auto 1rem;background:var(--enamel);border-radius:50% 50% 45% 45%/40% 40% 55% 55%;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden;border:3px solid #e8e8e8;transition:transform .4s,border-color .3s;cursor:none;}
+  .doctor-card:hover .doctor-avatar{transform:translateY(-8px) rotate(-2deg);border-color:var(--gum-pink);}
+  .doctor-avatar::before{content:'';position:absolute;top:8px;left:20%;right:40%;height:28%;background:rgba(255,255,255,.5);border-radius:50%;filter:blur(6px);transform:rotate(-20deg);}
+  .doctor-gum{position:absolute;bottom:0;left:-5%;right:-5%;height:32px;background:var(--gum-red);border-radius:50% 50% 0 0;}
+  .doctor-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.2rem;}
+  .doctor-role{font-size:.8rem;color:var(--gum-red);margin-bottom:.3rem;}
+  .doctor-exp{font-size:.78rem;color:#888;}
+
+  /* ══ BOOKING FORM ══ */
+  #booking{background:linear-gradient(160deg,var(--gum-pale) 0%,white 60%,var(--enamel) 100%);}
+  .booking-wrapper{max-width:580px;margin:0 auto;position:relative;}
+  .tooth-form-outer{background:white;border-radius:20px 20px 50% 50%/20px 20px 30% 30%;border:3px solid #e0e0e0;padding:3rem 3rem 4rem;box-shadow:0 20px 60px rgba(0,0,0,.1);position:relative;overflow:hidden;transition:border-color .5s;}
+  .tooth-form-outer::before{content:'';position:absolute;top:0;left:15%;right:15%;height:8px;background:linear-gradient(90deg,transparent,rgba(200,230,255,.6),transparent);border-radius:0 0 50% 50%;}
+  .gum-base{position:absolute;bottom:-5px;left:-3px;right:-3px;height:0;background:var(--gum-red);border-radius:50% 50% 30px 30px/30% 30% 30px 30px;transition:height .9s cubic-bezier(.16,1,.3,1);z-index:0;}
+  .tooth-form-outer.submitted{border-color:var(--gum-red);}
+  .tooth-form-outer.submitted .gum-base{height:80px;}
+  .form-inner{position:relative;z-index:1;}
+  .form-group{margin-bottom:1.3rem;}
+  .form-group label{display:block;font-size:.77rem;font-weight:700;color:var(--gum-red);margin-bottom:.38rem;text-transform:uppercase;letter-spacing:.07em;}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:2px solid #e8e8e8;border-radius:30px 30px 25px 25px/30px 30px 35px 35px;font-family:'DM Sans',sans-serif;font-size:.93rem;background:var(--pearl);color:var(--deep);outline:none;transition:border-color .3s,transform .2s,box-shadow .3s;cursor:none;}
+  .form-group textarea{border-radius:15px 15px 20px 20px;resize:none;height:88px;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gum-red);box-shadow:0 0 0 4px rgba(192,57,43,.1);transform:translateY(-2px);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .submit-btn{width:100%;padding:15px;background:var(--gum-red);color:white;border:none;border-radius:50px 50px 40px 40px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.97rem;cursor:none;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;box-shadow:0 6px 20px rgba(192,57,43,.35);}
+  .submit-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(192,57,43,.4);}
+  .submit-btn .btn-shine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:skewX(-20deg);transition:left .6s;}
+  .submit-btn:hover .btn-shine{left:150%;}
+
+  /* ══ SUCCESS OVERLAY ══ */
+  .success-overlay{position:absolute;inset:0;z-index:10;background:var(--gum-red);border-radius:20px 20px 50% 50%/20px 20px 30% 30%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;opacity:0;pointer-events:none;transition:opacity .5s .6s;}
+  .success-overlay.active{opacity:1;pointer-events:all;}
+  .success-tooth{width:80px;}
+  .success-bounce{animation:successBounce .6s ease forwards;}
+  @keyframes successBounce{0%{transform:scale(0) rotate(-20deg)}60%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+  .success-overlay h3{font-family:'Playfair Display',serif;font-size:1.8rem;color:white;font-weight:900;}
+  .success-overlay p{color:rgba(255,255,255,.8);font-size:.93rem;text-align:center;}
+
+  /* ══ CONTACT & MAP ══ */
+  #contact{background:var(--deep);color:white;padding:90px 5%;}
+  #contact .section-title{color:white;}
+  #contact .section-su

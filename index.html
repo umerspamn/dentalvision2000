@@ -3,528 +3,1338 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DentalVision2000 | Your Family Dentist in Karachi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
+  <title>Dental Vision 2000</title>
   <style>
-    /* GLOBAL RESET */
+
+    /* ════════════════════════════════
+       RESET & BASE
+    ════════════════════════════════ */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Roboto', sans-serif; color: #222; background: #ffffff; line-height: 1.5; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, sans-serif; color: #1a1a1a; background: #f5f8ff; overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
     :root {
-      --primary: #0a6cc4;
-      --primary-light: #e8f3fc;
-      --grey: #f5f5f5;
-      --dark: #0a2a43;
-      --spacing: 16px;
-      --radius: 8px;
+      --red:      #c0392b;
+      --red-dark: #a93226;
+      --red-pale: #fde8ec;
+      --gum-pink: #e8637a;
+      --gum-light:#f4a7b5;
+      --mint:     #00bfa5;
+      --blue:     #1976d2;
+      --deep:     #0d1b2a;
+      --light:    #f5f8ff;
+      --border:   #ddd;
+      --muted:    #666;
     }
 
-    /* TOP BAR */
-    .top-bar { background: var(--primary); color: #fff; font-size: 14px; padding: 6px 12px; display: flex; justify-content: space-between; }
-    @media(max-width:600px){ .top-bar { flex-direction: column; align-items: center; gap: 4px; } }
+    /* ════════════════════════════════
+       PAGE LOADER
+    ════════════════════════════════ */
+    #loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #fff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.4rem;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    /* NAVBAR */
-    header { position: sticky; top: 0; z-index: 1000; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
-    .logo { font-size: 22px; font-weight: 700; color: var(--primary); }
-    .menu { display: flex; gap: 24px; }
-    .menu a { font-weight: 500; position: relative; padding-bottom: 4px; transition: 0.25s ease; }
-    .menu a:hover { color: var(--primary); }
-    .menu a:hover::after { content:""; position:absolute; left:0; bottom:0; width:100%; height:2px; background:var(--primary); border-radius:2px; }
-
-    /* DROPDOWN */
-    .dropdown { position: relative; }
-    .dropdown-content { position: absolute; top: 100%; left: 0; background: #fff; padding: 12px; border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: none; flex-direction: column; min-width: 240px; border: 1px solid #e4e4e4; animation: dropfade 0.25s ease; }
-    .dropdown-content a { padding: 10px; border-radius: var(--radius); transition: 0.2s; }
-    .dropdown-content a:hover { background: var(--primary-light); color: var(--primary); }
-    .dropdown:hover .dropdown-content { display: flex; }
-
-    /* MOBILE MENU */
-    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 4px; }
-    .hamburger span { width: 24px; height: 3px; background: var(--dark); border-radius: 2px; }
-
-    .mobile-panel { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.15); padding: 20px; display: flex; flex-direction: column; gap: 20px; transition: 0.3s ease; overflow-y: auto; padding-bottom: 80px; z-index: 1501; }
-    .mobile-panel.open { right: 0; }
-    .mobile-panel a, .mobile-parent { font-weight: 500; padding: 8px 0; border-bottom: 1px solid #eee; display: block; text-align: left; background: none; border-radius: 0; color: #222; }
-    .mobile-parent { border: none; width: 100%; cursor: pointer; }
-    .mobile-group { display: flex; flex-direction: column; gap: 6px; }
-    .mobile-submenu { max-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding-left: 10px; border-left: 2px solid var(--primary-light); transition: max-height 0.25s ease; }
-    .mobile-group.open .mobile-submenu { max-height: 500px; }
-
-    @media(max-width:768px){
-      .menu { display: none; }
-      .hamburger { display: flex; }
+    /* Big tooth SVG spins */
+    .loader-tooth-wrap {
+      animation: loaderSpin 1.1s linear infinite;
+    }
+    @keyframes loaderSpin {
+      0%   { transform: rotate(0deg) scale(1); }
+      50%  { transform: rotate(180deg) scale(1.12); }
+      100% { transform: rotate(360deg) scale(1); }
     }
 
-    /* HERO */
-    .hero { display: flex; flex-direction: column; padding: 40px 20px; gap: 30px; }
-    @media(min-width:900px){ .hero { flex-direction: row; align-items: center; padding: 60px 40px; } }
+    /* Progress bar shaped like gum strip */
+    .loader-bar-wrap {
+      width: 180px; height: 10px;
+      background: #f0f0f0;
+      border-radius: 5px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--red), var(--gum-pink));
+      border-radius: 5px;
+      animation: loaderProgress 1.6s ease forwards;
+    }
+    @keyframes loaderProgress { to { width: 100%; } }
 
-    .hero-img { flex: 1; background: linear-gradient(120deg, #0a6cc4, #4aa3ff); aspect-ratio: 4/3; border-radius: var(--radius); }
-    .hero-text { flex: 1; display: flex; flex-direction: column; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.6s ease; }
+    .loader-text {
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--red); letter-spacing: 0.04em;
+      animation: loaderBlink 0.9s ease-in-out infinite;
+    }
+    @keyframes loaderBlink { 0%,100%{ opacity:1 } 50%{ opacity:0.35 } }
 
-    .hero-text.animate { opacity: 1; transform: translateY(0); }
+    /* Mini bouncing teeth below text */
+    .loader-teeth-row {
+      display: flex; gap: 5px; align-items: flex-end;
+    }
+    .loader-mini-tooth {
+      background: #fff; border: 2px solid var(--red);
+      animation: loaderTeethBounce 0.6s ease-in-out infinite alternate;
+    }
+    .loader-mini-tooth:nth-child(1){ width:18px;height:28px; border-radius:4px 4px 40% 40%/4px 4px 55% 55%; animation-delay:0s; }
+    .loader-mini-tooth:nth-child(2){ width:14px;height:34px; border-radius:3px 3px 35% 45%/3px 3px 60% 70%; animation-delay:0.1s; }
+    .loader-mini-tooth:nth-child(3){ width:16px;height:26px; border-radius:4px 4px 38% 38%/4px 4px 52% 52%; animation-delay:0.2s; }
+    .loader-mini-tooth:nth-child(4){ width:16px;height:26px; border-radius:4px 4px 38% 38%/4px 4px 52% 52%; animation-delay:0.3s; }
+    .loader-mini-tooth:nth-child(5){ width:14px;height:34px; border-radius:3px 3px 35% 45%/3px 3px 60% 70%; animation-delay:0.4s; }
+    .loader-mini-tooth:nth-child(6){ width:18px;height:28px; border-radius:4px 4px 40% 40%/4px 4px 55% 55%; animation-delay:0.5s; }
+    @keyframes loaderTeethBounce { from{ transform:translateY(0) } to{ transform:translateY(-8px) } }
 
-    .hero-text h1 { font-size: 32px; font-weight: 700; color: var(--dark); }
-    .hero-text p { font-size: 16px; color: #444; }
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    nav {
+      position: sticky; top: 0;
+      background: #fff; border-bottom: 3px solid var(--gum-pink);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 65px; z-index: 200;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    /* Logo icon shaped like a tooth */
+    .logo-icon {
+      width: 36px; height: 44px;
+      background: #fff; border: 2px solid var(--red);
+      border-radius: 50% 50% 40% 40% / 35% 35% 55% 55%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .logo-text { font-size: 1rem; font-weight: 800; line-height: 1.2; }
+    .logo-text span { color: var(--red); }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-size: 0.88rem; font-weight: 600; color: #333; }
+    .nav-links a:hover { color: var(--red); }
+    /* Nav CTA button — tooth-crowned shape */
+    .nav-btn {
+      background: var(--red); color: #fff;
+      padding: 9px 20px;
+      border-radius: 30px 30px 20px 20px;
+      font-size: 0.88rem; font-weight: 700;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .hamburger { display: none; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: var(--deep); }
 
-    .btn { padding: 12px 20px; border-radius: var(--radius); font-weight: 600; text-align: center; }
-    .btn-primary { background: var(--primary); color: #fff; transition: 0.25s ease; }
-    .btn-primary:hover { background: #084f91; }
-    .btn-secondary { border: 2px solid var(--primary); color: var(--primary); transition: 0.25s ease; }
-    .btn-secondary:hover { background: var(--primary); color: #fff; }
+    /* Mobile nav */
+    .mobile-menu {
+      display: none; flex-direction: column;
+      background: #fff; border-top: 1px solid #eee;
+      padding: 1rem 5%; position: sticky; top: 65px; z-index: 199;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 0.65rem 0; border-bottom: 1px solid #f0f0f0; font-size: 0.92rem; font-weight: 600; color: #333; }
+    .mobile-menu a:hover { color: var(--red); }
 
-    /* FEATURE CARDS */
-    .features { display: grid; gap: 20px; padding: 40px 20px; }
-    @media(min-width:900px){ .features { grid-template-columns: repeat(3,1fr); } }
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    #hero {
+      background: linear-gradient(135deg, #fff 0%, #fff4f4 50%, var(--red-pale) 100%);
+      padding: 80px 5% 130px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #fff; border: 1px solid var(--gum-light);
+      color: var(--red); padding: 5px 16px;
+      border-radius: 20px; font-size: 0.78rem; font-weight: 700;
+      margin-bottom: 1.2rem; letter-spacing: 0.04em;
+    }
+    #hero h1 { font-size: 2.6rem; font-weight: 900; line-height: 1.15; margin-bottom: 1rem; color: var(--deep); }
+    #hero h1 span { color: var(--red); display: block; }
+    #hero p { font-size: 1rem; color: var(--muted); max-width: 460px; margin: 0 auto 1.2rem; line-height: 1.7; }
+    .hero-phone {
+      display: inline-block; background: #fff;
+      border: 2px solid var(--gum-light); color: var(--red);
+      padding: 8px 20px; border-radius: 25px;
+      font-weight: 700; font-size: 0.95rem; margin-bottom: 1.8rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-    .feature-card { position: relative; height: 220px; background: linear-gradient(120deg,#4aa3ff,#0a6cc4); border-radius: var(--radius); padding: 20px; color:#fff; display: flex; flex-direction: column; justify-content: flex-end; transition: 0.3s; }
-    .feature-card:hover { transform: translateY(-6px); }
+    /* ── Buttons — tooth-crowned shape ── */
+    .btn-red {
+      background: var(--red); color: #fff;
+      padding: 13px 30px; border-radius: 30px 30px 20px 20px;
+      font-size: 0.95rem; font-weight: 700;
+      border: none; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-red:hover { background: var(--red-dark); transform: translateY(-2px); }
+    .btn-outline {
+      background: #fff; color: var(--deep);
+      padding: 11px 28px; border-radius: 30px 30px 20px 20px;
+      font-size: 0.95rem; font-weight: 700;
+      border: 2px solid var(--gum-pink); cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { background: var(--red-pale); transform: translateY(-2px); }
 
-    /* HIGH-TECH */
-    .hightech { background: var(--primary-light); padding: 60px 20px; text-align: center; }
-    .hightech h2 { color: var(--dark); margin-bottom: 16px; }
+    /* Teeth decorative bar at hero bottom */
+    .teeth-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; justify-content: center; align-items: flex-end;
+      gap: 3px; padding: 0 3%; pointer-events: none;
+    }
+    .teeth-bar::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 20px; background: var(--red);
+      border-radius: 40% 40% 0 0 / 60% 60% 0 0;
+    }
+    .t { position: relative; z-index: 1; background: #fff; border: 2px solid #ddd; border-bottom: none; }
+    .t-i { width: 40px; height: 62px; border-radius: 6px 6px 35% 35%/6px 6px 52% 52%; }
+    .t-c { width: 33px; height: 72px; border-radius: 5px 5px 30% 42%/5px 5px 56% 68%; }
+    .t-p { width: 38px; height: 54px; border-radius: 6px 6px 32% 32%/6px 6px 46% 46%; }
+    .t-m { width: 50px; height: 50px; border-radius: 8px 8px 30% 30%/8px 8px 44% 44%; }
 
-    /* DOCTORS */
-    .doctors { padding: 60px 20px; background: #f6f9ff; text-align: center; }
-    .doctors h2 { font-size: 26px; color: var(--dark); margin-bottom: 8px; }
-    .doctors p.section-subtitle { color: #555; max-width: 520px; margin: 0 auto 32px; font-size: 15px; }
-    .doctor-grid { display: grid; gap: 24px; max-width: 1100px; margin: 0 auto; align-items: stretch; }
-    @media(min-width:900px){ .doctor-grid { grid-template-columns: repeat(3,1fr); } }
+    /* ════════════════════════════════
+       MARQUEE
+    ════════════════════════════════ */
+    .marquee { background: var(--red); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+    .marquee-inner { display: inline-block; animation: mScroll 26s linear infinite; }
+    .marquee-inner span { margin-right: 3rem; font-size: 0.84rem; font-weight: 600; }
+    @keyframes mScroll { from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
 
-    .doctor-card {
-  position: relative;
-  height: 280px;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 8px 20px rgba(10,108,196,0.10);
-  transition: 0.25s ease;
-}
-.doctor-card::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0));
-}
-.doctor-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(10,108,196,0.18);
-}
-    .doctor-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:48px; background: linear-gradient(120deg,#0a6cc4,#4aa3ff); opacity:0.2; }
-    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(10,108,196,0.12); border-color: #c2d9f5; }
+    /* ════════════════════════════════
+       SECTION BASE
+    ════════════════════════════════ */
+    section { padding: 75px 5%; }
+    .section-header { text-align: center; margin-bottom: 2.8rem; }
+    .section-header h2 { font-size: 2rem; font-weight: 900; margin-bottom: 0.4rem; }
+    .section-header h2 span { color: var(--red); }
+    .section-header p { color: var(--muted); font-size: 0.95rem; max-width: 460px; margin: 0 auto; line-height: 1.6; }
 
-    .doctor-photo {
-  width: 100%;
-  height: 180px;
-  border-radius: 12px;
-  background: url('treatmentdrfurqan.png') center/cover no-repeat;
-  margin: 0 auto 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-    .doctor-card h3 {
-  position: relative;
-  color: #fff;
-  font-size: 20px;
-  margin-bottom: 4px;
-  z-index: 2;
-}
-    .doctor-card p {
-  position: relative;
-  color: #eaeaea;
-  font-size: 14px;
-  margin-bottom: 10px;
-  z-index: 2;
-}
-    .doctor-card .btn { margin-top: 14px; padding-inline: 18px; font-size: 14px; }
+    /* ════════════════════════════════
+       CLINIC IMAGE STRIP
+    ════════════════════════════════ */
+    .clinic-strip { position: relative; height: 320px; overflow: hidden; background: var(--deep); }
+    .clinic-strip img { width: 100%; height: 100%; object-fit: cover; opacity: 0.65; }
+    .clinic-strip-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(13,27,42,0.78) 0%, rgba(13,27,42,0.12) 70%);
+      display: flex; align-items: center; padding: 0 7%;
+    }
+    .clinic-strip-text h2 { font-size: 1.8rem; font-weight: 900; color: #fff; margin-bottom: 0.6rem; line-height: 1.3; }
+    .clinic-strip-text h2 em { color: var(--gum-light); font-style: italic; }
+    .clinic-strip-text p { color: rgba(255,255,255,0.72); font-size: 0.92rem; max-width: 360px; line-height: 1.6; }
 
-    /* SERVICES GRID */
-    .services { padding: 60px 20px; }
-    .services-grid { display: grid; gap: 20px; }
-    @media(min-width:900px){ .services-grid { grid-template-columns: repeat(3,1fr); } }
+    /* ════════════════════════════════
+       SERVICES — tooth-shaped cards
+    ════════════════════════════════ */
+    #services { background: var(--light); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.8rem; max-width: 1100px; margin: 0 auto;
+    }
 
-    .service-card { background: var(--grey); padding: 20px; border-radius: var(--radius); display:flex; flex-direction:column; gap:10px; }
-    .service-icon { width: 40px; height: 40px; border-radius:var(--radius); background: linear-gradient(120deg,#0a6cc4,#4aa3ff); }
+    /*
+      TOOTH CARD:
+      - Wide flat crown at top (rounded flat edges)
+      - Narrows into a rounded root at the bottom
+      Achieved with border-radius: top corners gently rounded,
+      bottom corners very rounded to create the root taper.
+    */
+    .service-card {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-top: 4px solid var(--red);
+      /* Crown: flat top with slight rounding; Root: taper inward at bottom */
+      border-radius: 16px 16px 50% 50% / 12px 12px 40% 40%;
+      padding: 2.2rem 1.2rem 2.6rem;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    /* Enamel shine on crown */
+    .service-card::before {
+      content: '';
+      position: absolute; top: 6px; left: 22%; right: 42%;
+      height: 5px; background: rgba(200,230,255,0.6);
+      border-radius: 3px;
+    }
+    /* Gum base at root tip */
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 20%; right: 20%;
+      height: 8px; background: var(--red);
+      border-radius: 0 0 50% 50%;
+      opacity: 0.15;
+    }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 10px 30px rgba(192,57,43,0.15); }
+    .service-card .icon { font-size: 2rem; margin-bottom: 0.7rem; display: block; }
+    .service-card h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--deep); }
+    .service-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 
-    /* REVIEWS */
-    .reviews { padding: 60px 20px; }
-    .review-card { background: var(--grey); padding:20px; border-radius:var(--radius); }
+    /* ════════════════════════════════
+       GALLERY — tooth-shaped frames
+    ════════════════════════════════ */
+    #gallery { background: #fff; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem; max-width: 1050px; margin: 0 auto;
+    }
+    .gallery-item {
+      /* Tooth shape: crowned top, root taper bottom */
+      border-radius: 18px 18px 55% 55% / 14px 14px 45% 45%;
+      overflow: hidden;
+      border: 3px solid var(--border);
+      border-top: 4px solid var(--gum-pink);
+      position: relative;
+      aspect-ratio: 3/4;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gallery-item:hover { transform: translateY(-8px); box-shadow: 0 12px 32px rgba(192,57,43,0.18); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(192,57,43,0.88);
+      color: #fff; font-size: 0.84rem; font-weight: 700;
+      padding: 0.7rem; text-align: center;
+    }
+    /* Enamel shine on gallery tooth */
+    .gallery-item::before {
+      content: ''; position: absolute;
+      top: 10px; left: 18%; width: 18%; height: 28%;
+      background: rgba(255,255,255,0.22);
+      border-radius: 50%; transform: rotate(-15deg); z-index: 1;
+      pointer-events: none;
+    }
 
-    /* LOCATION */
-    .location-section { padding:60px 20px; background:#ffffff; }
-    .location-inner { max-width:1100px; margin:0 auto; display:grid; gap:24px; align-items:stretch; }
-    @media(min-width:900px){ .location-inner { grid-template-columns: minmax(0,1.1fr) minmax(0,1.2fr); } }
-    .location-text { display:flex; flex-direction:column; gap:10px; }
-    .location-text h2 { font-size:24px; color:var(--dark); }
-    .location-text p { font-size:14px; color:#555; }
-    .location-text .location-desc { max-width:460px; }
-    .location-text .location-name { font-weight:500; }
-    .location-text .location-hours { font-size:14px; }
-    .location-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .location-map-wrapper { border-radius:16px; overflow:hidden; box-shadow:0 10px 24px rgba(10,108,196,0.18); min-height:260px; }
-    .location-map-inner { position:relative; width:100%; padding-top:60%; }
-    .location-map-inner iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    /* ════════════════════════════════
+       STRIPE DIVIDER
+    ════════════════════════════════ */
+    .stripe-divider {
+      height: 10px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--red) 0%, var(--red) 30%,
+        #fff 30%, #fff 35%,
+        var(--mint) 35%, var(--mint) 65%,
+        #fff 65%, #fff 70%,
+        var(--blue) 70%, var(--blue) 100%
+      );
+      opacity: 0.55;
+    }
 
-    /* FAQ */
-    .faq { padding:60px 20px; background:#f6f9ff; }
-    .faq-inner { max-width: 900px; margin: 0 auto; }
-    .faq h2 { text-align:center; color:var(--dark); margin-bottom:8px; }
-    .faq-desc { text-align:center; color:#555; margin-bottom:24px; font-size:15px; }
-    .faq-item { background:#fff; border-radius:12px; padding:16px 18px; margin-bottom:12px; box-shadow:0 4px 10px rgba(10,108,196,0.04); border:1px solid #e3edf8; cursor:pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
-    .faq-item:hover { border-color:#c4d8f3; box-shadow:0 6px 14px rgba(10,108,196,0.08); transform: translateY(-2px); }
-    .faq-header { display:flex; align-items:center; gap:12px; justify-content:space-between; }
-    .faq-question { flex:1; font-weight:500; color:var(--dark); font-size:15px; }
-    .faq-icon { flex-shrink:0; width:24px; height:24px; border-radius:50%; border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:16px; line-height:1; color:var(--primary); transition: 0.25s ease; }
-    .faq-item.open .faq-icon { background:var(--primary); color:#fff; transform: rotate(45deg); }
-    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease; font-size:14px; color:#555; padding-left:36px; }
-    .faq-item.open .faq-answer { margin-top:8px; }
+    /* ════════════════════════════════
+       ABOUT
+    ════════════════════════════════ */
+    #about { background: var(--deep); color: #fff; }
+    #about .section-header h2 { color: #fff; }
+    #about .section-header p { color: rgba(255,255,255,0.5); }
+    .about-layout { display: flex; gap: 3rem; align-items: center; max-width: 900px; margin: 0 auto; }
+    .about-brush {
+      flex-shrink: 0; background: #ff7043;
+      width: 72px; border-radius: 36px;
+      padding: 1rem 0; display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+    }
+    .bristle { width: 8px; height: 22px; background: var(--blue); border-radius: 4px; }
+    .bristle:nth-child(even) { height: 27px; }
+    .brush-label { color: #fff; font-size: 0.45rem; font-weight: 700; margin-top: 8px; letter-spacing: 0.06em; }
+    .about-body h2 { font-size: 1.75rem; font-weight: 900; margin-bottom: 0.8rem; line-height: 1.25; }
+    .about-body h2 span { color: var(--gum-light); }
+    .about-body p { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 0.8rem; font-size: 0.93rem; }
+    .stats-row { display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .stat-box { text-align: center; }
+    .stat-box .num { font-size: 2.2rem; font-weight: 900; color: var(--gum-light); display: block; }
+    .stat-box .lbl { font-size: 0.77rem; color: rgba(255,255,255,0.4); }
 
-    /* FOOTER */
-    footer { background: var(--dark); color: #fff; padding: 40px 20px; }
-    .footer-grid { display:grid; gap:24px; }
-    @media(min-width:900px){ .footer-grid { grid-template-columns: repeat(3,1fr); } }
+    /* ════════════════════════════════
+       X-RAY SECTION
+    ════════════════════════════════ */
+    .xray-section { background: #111d2b; padding: 65px 5%; }
+    .xray-inner { display: flex; gap: 3rem; align-items: center; max-width: 950px; margin: 0 auto; }
+    /* X-ray image framed as a tooth */
+    .xray-img {
+      flex-shrink: 0; width: 290px;
+      border-radius: 18px 18px 55% 55% / 14px 14px 45% 45%;
+      overflow: hidden;
+      border: 3px solid rgba(0,191,165,0.5);
+      box-shadow: 0 0 30px rgba(0,191,165,0.2);
+    }
+    .xray-img img { width: 100%; display: block; }
+    .xray-img .img-ph {
+      height: 240px; background: rgba(0,191,165,0.08);
+      display: flex; align-items: center; justify-content: center; font-size: 3rem;
+    }
+    .xray-text { color: #fff; }
+    .xray-text h3 { font-size: 1.55rem; font-weight: 900; color: var(--mint); margin-bottom: 0.8rem; }
+    .xray-text p { color: rgba(255,255,255,0.68); line-height: 1.8; font-size: 0.93rem; margin-bottom: 0.8rem; }
+    .xray-tag {
+      display: inline-block;
+      background: rgba(0,191,165,0.14); border: 1px solid rgba(0,191,165,0.4);
+      color: var(--mint); padding: 5px 14px;
+      border-radius: 20px; font-size: 0.78rem; font-weight: 700;
+    }
 
-    .footer-column h4 { margin-bottom: 12px; }
+    /* ════════════════════════════════
+       TESTIMONIALS — tooth-shaped cards
+    ════════════════════════════════ */
+    #testimonials { background: var(--light); }
+    .testimonials-row {
+      display: flex; gap: 1.4rem;
+      overflow-x: auto; padding-bottom: 0.8rem;
+      max-width: 1100px; margin: 0 auto;
+      scrollbar-width: thin;
+    }
+    .testimonial-card {
+      flex-shrink: 0; width: 255px;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-top: 4px solid var(--blue);
+      /* Tooth crown top, root taper bottom */
+      border-radius: 16px 16px 50% 50% / 12px 12px 40% 40%;
+      padding: 1.6rem 1.2rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    /* Enamel shine */
+    .testimonial-card::before {
+      content: ''; position: absolute;
+      top: 8px; left: 18%; width: 20%; height: 5px;
+      background: rgba(200,230,255,0.55); border-radius: 3px;
+    }
+    /* Gum tip */
+    .testimonial-card::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 25%; right: 25%;
+      height: 8px; background: var(--blue); opacity: 0.18;
+      border-radius: 0 0 50% 50%;
+    }
+    .testimonial-card .stars { color: #ffb300; margin-bottom: 0.6rem; font-size: 0.9rem; }
+    .testimonial-card blockquote { font-size: 0.84rem; color: #555; line-height: 1.7; font-style: italic; margin-bottom: 0.8rem; }
+    .testimonial-card .author { font-weight: 800; font-size: 0.83rem; color: var(--deep); }
+    .testimonial-card .tag { font-size: 0.73rem; color: var(--red); }
 
-    .footer-bottom { text-align:center; margin-top:20px; font-size:14px; }
+    /* ════════════════════════════════
+       TEAM — tooth-shaped avatars
+    ════════════════════════════════ */
+    #team { background: #fff; }
+    .team-row { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; max-width: 680px; margin: 0 auto; }
+    .doctor-card { width: 220px; text-align: center; }
+    /* Avatar is a tooth shape */
+    .doctor-avatar {
+      width: 148px; height: 180px; margin: 0 auto 1rem;
+      background: var(--light);
+      border: 3px solid var(--border);
+      border-top: 4px solid var(--gum-pink);
+      border-radius: 50% 50% 44% 44% / 38% 38% 54% 54%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.8rem; position: relative; overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .doctor-card:hover .doctor-avatar { transform: translateY(-6px); border-color: var(--red); }
+    /* Gum at root */
+    .doctor-avatar .gum {
+      position: absolute; bottom: 0; left: -5%; right: -5%;
+      height: 26px; background: var(--red);
+      border-radius: 50% 50% 0 0;
+    }
+    /* Enamel shine */
+    .doctor-avatar::before {
+      content: ''; position: absolute;
+      top: 10px; left: 18%; width: 18%; height: 28%;
+      background: rgba(255,255,255,0.45); border-radius: 50%;
+      transform: rotate(-15deg); pointer-events: none;
+    }
+    .doctor-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .doctor-card .role { font-size: 0.8rem; color: var(--red); margin-bottom: 0.18rem; font-weight: 700; }
+    .doctor-card .exp { font-size: 0.76rem; color: var(--muted); }
 
-    /* WHATSAPP FLOAT */
-    .wa-float { position:fixed; bottom:20px; right:20px; width:56px; height:56px; background:#25d366; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1200; transition:0.25s ease; box-shadow:0 4px 10px rgba(0,0,0,0.15); }
-    .wa-float:hover { transform: translateY(-4px) scale(1.08); box-shadow:0 8px 18px rgba(0,0,0,0.22); background:#1ebe5d; }
-    .wa-float svg { width:28px; fill:#fff; }
-  @keyframes dropfade { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+    /* ════════════════════════════════
+       BOOKING FORM — tooth-shaped box
+    ════════════════════════════════ */
+    #booking { background: #fff4f4; }
+    /* The whole form box is tooth shaped */
+    .form-box {
+      max-width: 560px; margin: 0 auto;
+      background: #fff;
+      border: 3px solid var(--border);
+      border-top: 5px solid var(--red);
+      /* Crown top flat, root narrows at bottom */
+      border-radius: 20px 20px 55% 55% / 16px 16px 44% 44%;
+      padding: 2.8rem 2.5rem 3.5rem;
+      box-shadow: 0 6px 28px rgba(192,57,43,0.1);
+      position: relative; overflow: hidden;
+    }
+    /* Enamel shine on form crown */
+    .form-box::before {
+      content: ''; position: absolute;
+      top: 8px; left: 20%; right: 40%; height: 6px;
+      background: rgba(200,230,255,0.5); border-radius: 3px;
+    }
+    /* Gum root at bottom */
+    .form-box::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 25%; right: 25%;
+      height: 16px; background: var(--red); opacity: 0.18;
+      border-radius: 0 0 50% 50%;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block; font-size: 0.78rem; font-weight: 800;
+      color: var(--red); margin-bottom: 0.3rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 2px solid #e0e0e0;
+      /* Input fields also get a gentle tooth crown rounding */
+      border-radius: 22px 22px 18px 18px;
+      font-size: 0.92rem; font-family: Arial, sans-serif;
+      background: #fafafa; color: #1a1a1a; outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--red); background: #fff; }
+    .form-group textarea { resize: vertical; height: 90px; border-radius: 14px 14px 18px 18px; }
+    .submit-btn {
+      width: 100%; padding: 14px;
+      background: var(--red); color: #fff;
+      border: none; border-radius: 30px 30px 22px 22px;
+      font-size: 1rem; font-weight: 800;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+      position: relative; z-index: 1;
+    }
+    .submit-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+    /* Success */
+    .success-msg { display: none; text-align: center; padding: 2.5rem 1rem; position: relative; z-index: 1; }
+    .success-msg .tick { font-size: 3.2rem; margin-bottom: 0.8rem; }
+    .success-msg h3 { font-size: 1.4rem; font-weight: 900; color: var(--red); margin-bottom: 0.5rem; }
+    .success-msg p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+
+    /* Form error banner */
+    .form-error {
+      display: none;
+      background: #fff0f0; border: 2px solid var(--red);
+      color: var(--red-dark); border-radius: 22px 22px 18px 18px;
+      padding: 10px 16px; font-size: 0.88rem; font-weight: 700;
+      margin-bottom: 1.2rem; text-align: center;
+    }
+
+    /* Submit button disabled state */
+    .submit-btn:disabled {
+      background: #e88; cursor: not-allowed; transform: none;
+    }
+
+    /* ════════════════════════════════
+       CONTACT + MAP
+    ════════════════════════════════ */
+    #contact { background: var(--deep); color: #fff; }
+    #contact .section-header h2 { color: #fff; }
+    #contact .section-header p { color: rgba(255,255,255,0.45); }
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1.3fr;
+      gap: 2.5rem; max-width: 1000px; margin: 0 auto; align-items: start;
+    }
+    .contact-list { display: flex; flex-direction: column; gap: 1rem; }
+    /* Each contact item — tooth-crown top */
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 3px solid var(--gum-pink);
+      border-radius: 14px 14px 40% 40% / 10px 10px 30% 30%;
+      padding: 1rem 1.2rem 1.4rem;
+    }
+    .contact-item .ci { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-item h4 { font-size: 0.78rem; color: var(--gum-light); font-weight: 800; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.07em; }
+    .contact-item a, .contact-item p { color: rgba(255,255,255,0.7); font-size: 0.88rem; line-height: 1.5; }
+    .contact-item a:hover { color: var(--gum-light); }
+
+    /* Map — tooth-shaped frame */
+    .map-box {
+      border-radius: 18px 18px 55% 55% / 14px 14px 44% 44%;
+      overflow: hidden;
+      border: 3px solid rgba(232,99,122,0.4);
+      border-top: 4px solid var(--gum-pink);
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.04);
+      position: relative;
+    }
+    /* Enamel shine on map tooth */
+    .map-box::before {
+      content: ''; position: absolute;
+      top: 8px; left: 18%; width: 20%; height: 5px;
+      background: rgba(255,255,255,0.12); border-radius: 3px; z-index: 1;
+    }
+    .map-box iframe { width: 100%; height: 100%; border: none; display: block; }
+    .map-ph {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.8rem; color: rgba(255,255,255,0.4);
+      padding: 2rem; text-align: center;
+    }
+    .map-ph .map-pin { font-size: 2.5rem; }
+    .map-ph p { font-size: 0.84rem; line-height: 1.6; }
+    .map-ph code { font-size: 0.73rem; background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 4px; color: var(--gum-light); }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer { background: #060e17; color: #fff; padding: 3rem 5% 1.5rem; }
+    /* Decorative teeth row at top of footer */
+    .footer-teeth {
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: 3px; margin-bottom: 2.5rem; position: relative;
+    }
+    .footer-teeth::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 12px; background: var(--red); opacity: 0.25;
+      border-radius: 0 0 40% 40% / 0 0 60% 60%;
+    }
+    .ft { background: #0d1b2a; border: 2px solid #1a2a3a; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto 2rem; }
+    .footer-brand h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 0.8rem; }
+    .footer-brand h3 span { color: var(--gum-light); }
+    .footer-brand p { color: rgba(255,255,255,0.38); font-size: 0.85rem; line-height: 1.8; }
+    .footer-col h4 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gum-light); margin-bottom: 0.8rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { color: rgba(255,255,255,0.38); font-size: 0.85rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--gum-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.4rem; text-align: center; color: rgba(255,255,255,0.22); font-size: 0.77rem; }
+
+    /* ════════════════════════════════
+       WHATSAPP FLOATING TOOTH BUTTON
+    ════════════════════════════════ */
+    .wa-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      text-decoration: none;
+    }
+    .wa-tooth {
+      width: 58px; height: 68px;
+      background: #25d366;
+      border-radius: 50% 50% 42% 42% / 36% 36% 54% 54%;
+      border: 3px solid #1ebe5d;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .wa-tooth:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(37,211,102,0.55); }
+    .wa-tooth svg { width: 28px; height: 28px; }
+    .wa-tooth::after {
+      content: ''; position: absolute;
+      bottom: -8px; left: 50%; transform: translateX(-50%);
+      width: 32px; height: 10px;
+      background: #1ebe5d; border-radius: 0 0 50% 50%; z-index: -1;
+    }
+    .wa-label-txt {
+      background: #25d366; color: #fff;
+      font-size: 0.7rem; font-weight: 800;
+      padding: 3px 10px; border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(37,211,102,0.35);
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media(max-width: 860px){
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .about-layout { flex-direction: column; }
+      .xray-inner { flex-direction: column; }
+      .xray-img { width: 100%; max-width: 380px; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:last-child { display: none; }
+    }
+    @media(max-width: 540px){
+      #hero h1 { font-size: 1.9rem; }
+      section { padding: 55px 5%; }
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:last-child { display: block; }
+      .t { display: none; }
+      .t:nth-child(-n+8) { display: block; }
+      .t-i { width: 26px; height: 44px; }
+      .t-m { width: 34px; height: 34px; }
+      .t-c { width: 22px; height: 52px; }
+      .t-p { width: 25px; height: 36px; }
+      .form-box { padding: 2rem 1.4rem 2.8rem; }
+      .team-row { gap: 1.5rem; }
+    }
+
   </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div>Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</div>
-  <a href="tel:03212073839">Call: 0321-2073839</a>
+<!-- ════════════════════════
+     PAGE LOADER
+════════════════════════ -->
+<div id="loader">
+  <div class="loader-tooth-wrap">
+    <!-- Tooth SVG -->
+    <svg width="72" height="84" viewBox="0 0 72 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Tooth body -->
+      <path d="M36 4C22 4 10 13 8 27C6 39 12 50 10 62C8 74 14 81 22 81C28 81 31 74 36 74C41 74 44 81 50 81C58 81 64 74 62 62C60 50 66 39 64 27C62 13 50 4 36 4Z"
+        fill="white" stroke="#c0392b" stroke-width="3"/>
+      <!-- Enamel shine -->
+      <path d="M20 16C17 19 14 24 13 29" stroke="#b0d4f0" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Inner line detail -->
+      <path d="M28 44 C28 50 30 56 36 58 C42 56 44 50 44 44" stroke="#f4a7b5" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="loader-text">Dental Vision 2000</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-teeth-row">
+    <div class="loader-mini-tooth"></div>
+    <div class="loader-mini-tooth"></div>
+    <div class="loader-mini-tooth"></div>
+    <div class="loader-mini-tooth"></div>
+    <div class="loader-mini-tooth"></div>
+    <div class="loader-mini-tooth"></div>
+  </div>
 </div>
 
-<header>
-  <nav class="nav">
-    <div class="logo">DentalVision2000</div>
-    <div class="menu">
-      <a href="#">Home</a>
-      <a href="doctors.html">Meet the Doctors</a>
-      <div class="dropdown">
-        <a href="Services-page-dentalvision2000.html">Services</a>
-        <div class="dropdown-content">
-          <a href="root-canal.html">Root Canal Treatment</a>
-          <a href="implants.html">Dental Implants</a>
-          <a href="invisible-aligners.html">Invisible Aligners</a>
-          <a href="scaling.html">Scaling & Polishing</a>
-          <a href="whitening.html">Teeth Whitening</a>
-          <a href="fillings.html">Dental Fillings</a>
-          <a href="crowns.html">Crowns & Bridges</a>
-          <a href="gum.html">Gum Treatment</a>
-          <a href="full-mouth.html">Full Mouth Rehabilitation</a>
-          <a href="emergency.html">Emergency Dental Care</a>
-          <a href="pediatric.html">Pediatric Dentistry</a>
-        </div>
-      </div>
-      <a href="consultation.html">Consultation</a>
-    </div>
 
-    <div class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </div>
-  </nav>
-</header>
+<!-- ════════════════════════
+     NAVBAR
+════════════════════════ -->
+<nav id="navbar">
+  <a class="logo" href="#">
+    <div class="logo-icon">🦷</div>
+    <div class="logo-text">Dental Vision<br><span>2000</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Doctors</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+</nav>
 
-<div class="mobile-panel" id="mobilePanel">
-  <a href="#">Home</a>
-  <a href="doctors.html">Meet the Doctors</a>
-  <div class="mobile-group">
-    <button type="button" class="mobile-parent">Services ▾</button>
-    <div class="mobile-submenu">
-      <a href="root-canal.html">Root Canal Treatment</a>
-      <a href="implants.html">Dental Implants</a>
-      <a href="invisible-aligners.html">Invisible Aligners</a>
-      <a href="scaling.html">Scaling &amp; Polishing</a>
-      <a href="whitening.html">Teeth Whitening</a>
-      <a href="fillings.html">Dental Fillings</a>
-      <a href="crowns.html">Crowns &amp; Bridges</a>
-      <a href="gum.html">Gum Treatment</a>
-      <a href="full-mouth.html">Full Mouth Rehabilitation</a>
-      <a href="emergency.html">Emergency Dental Care</a>
-      <a href="pediatric.html">Pediatric Dentistry</a>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services"   onclick="closeMobile()">Services</a>
+  <a href="#gallery"    onclick="closeMobile()">Gallery</a>
+  <a href="#about"      onclick="closeMobile()">About</a>
+  <a href="#team"       onclick="closeMobile()">Doctors</a>
+  <a href="#booking"    onclick="closeMobile()">Book Appointment</a>
+  <a href="#contact"    onclick="closeMobile()">Contact</a>
+</div>
+
+
+<!-- ════════════════════════
+     HERO
+════════════════════════ -->
+<section id="hero">
+  <div class="hero-badge">✦ Karachi's Premier Dental Care Since 2000</div>
+  <h1>Perfect Smiles,<span>Crafted with Care</span></h1>
+  <p>Where cutting-edge dentistry meets warm, compassionate care. Led by Dr. Furqan with over 25 years of experience.</p>
+  <div class="hero-phone">📞 <a href="tel:03212073839" style="color:inherit;">0321-2073839</a></div>
+  <div class="hero-btns">
+    <button class="btn-red" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Appointment</button>
+    <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Our Services</button>
+  </div>
+  <!-- Decorative teeth at hero bottom -->
+  <div class="teeth-bar" id="teethBar"></div>
+</section>
+
+
+<!-- ════════════════════════
+     MARQUEE
+════════════════════════ -->
+<div class="marquee">
+  <div class="marquee-inner" id="marqueeInner"></div>
+</div>
+
+
+<!-- ════════════════════════
+     CLINIC IMAGE STRIP
+════════════════════════ -->
+<div class="clinic-strip">
+  <img src="dentalchair.png" alt="Dental Vision 2000 Clinic" onerror="this.style.display='none'">
+  <div class="clinic-strip-overlay">
+    <div class="clinic-strip-text">
+      <h2>State-of-the-Art<br><em>Dental Care Facility</em></h2>
+      <p>Our modern clinic is equipped with the latest dental technology to ensure every visit is comfortable and effective.</p>
     </div>
   </div>
-  <a href="consultation.html">Consultation</a>
 </div>
 
-<main>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-img"></div>
-    <div class="hero-text" id="heroText">
-      <small style="color:var(--primary);font-weight:700;">Family-Friendly Dental Clinic in Karachi</small>
-      <h1>Safe, Comfortable & Affordable Dental Care</h1>
-      <p>Your family’s trusted dental clinic for check-ups, emergencies and smile makeovers.</p>
-      <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Schedule Appointment on WhatsApp</a>
-        <a href="consultation.html" class="btn btn-secondary">Online Consultation</a>
+
+<!-- ════════════════════════
+     SERVICES
+════════════════════════ -->
+<section id="services">
+  <div class="section-header">
+    <h2>Our <span>Services</span></h2>
+    <p>Every treatment crafted to preserve and enhance your smile's natural beauty</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="icon">🦷</span>
+      <h3>General Dentistry</h3>
+      <p>Check-ups, cleanings, fillings, and preventive care for a healthy smile year-round.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">✨</span>
+      <h3>Teeth Whitening</h3>
+      <p>Professional whitening that brightens your smile up to 10 shades, safely and effectively.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">🔩</span>
+      <h3>Root Canal</h3>
+      <p>Pain-free root canal therapy to save infected teeth and restore full function.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">👑</span>
+      <h3>Dental Crowns</h3>
+      <p>Ceramic and zirconia crowns crafted to restore and protect damaged teeth beautifully.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">🌱</span>
+      <h3>Dental Implants</h3>
+      <p>Titanium implants that look, feel, and function exactly like your natural teeth.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">🔧</span>
+      <h3>Orthodontics</h3>
+      <p>Aligners and braces by Dr. Uzma for perfectly straight, confident teeth.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">🩺</span>
+      <h3>Gum Treatment</h3>
+      <p>Periodontal therapy to restore and maintain healthy, vibrant gums for life.</p>
+    </div>
+    <div class="service-card">
+      <span class="icon">🔬</span>
+      <h3>Digital X-Rays</h3>
+      <p>Fast, clear digital imaging with minimal radiation for accurate, early diagnosis.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     GALLERY
+════════════════════════ -->
+<section id="gallery">
+  <div class="section-header">
+    <h2>Clinic <span>Gallery</span></h2>
+    <p>A glimpse inside Dental Vision 2000 — our treatments and facilities</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="treatment2.png" alt="Dental Treatment" onerror="this.style.display='none'">
+      <div class="gallery-caption">Expert Treatment</div>
+    </div>
+    <div class="gallery-item">
+      <img src="treatmentdrfurqan.png" alt="Dr. Furqan" onerror="this.style.display='none'">
+      <div class="gallery-caption">Dr. Furqan at Work</div>
+    </div>
+    <div class="gallery-item">
+      <img src="dentalchair.png" alt="Dental Chair" onerror="this.style.display='none'">
+      <div class="gallery-caption">Our Modern Clinic</div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe-divider"></div>
+
+
+<!-- ════════════════════════
+     ABOUT
+════════════════════════ -->
+<section id="about">
+  <div class="section-header">
+    <h2>Who We <span>Are</span></h2>
+    <p>Trusted by Karachi families for over two decades</p>
+  </div>
+  <div class="about-layout">
+    <div class="about-brush">
+      <div class="bristle"></div>
+      <div class="bristle"></div>
+      <div class="bristle"></div>
+      <div class="bristle"></div>
+      <div class="bristle"></div>
+      <div class="brush-label">DV2000</div>
+    </div>
+    <div class="about-body">
+      <h2>Trusted by <span>Karachi</span><br>for Over Two Decades</h2>
+      <p>At Dental Vision 2000, we believe every smile tells a story. Since our founding, we've combined the latest dental technology with a deeply personal approach to patient care.</p>
+      <p>Founded and led by Dr. Furqan — with over 25 years of clinical excellence — our clinic has transformed thousands of smiles across Karachi. Every case is handled with the same precision and genuine warmth.</p>
+      <div class="stats-row">
+        <div class="stat-box"><span class="num">25+</span><span class="lbl">Years Experience</span></div>
+        <div class="stat-box"><span class="num">8K+</span><span class="lbl">Smiles Restored</span></div>
+        <div class="stat-box"><span class="num">99%</span><span class="lbl">Satisfaction Rate</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FEATURES -->
-  <section class="features">
-    <a class="feature-card" href="root-canal.html">
-      <div><strong>Root Canal Treatment</strong><br><small>Microscope-assisted precision for lasting relief</small><br>Learn more →</div>
-    </a>
-    <a class="feature-card" href="implants.html">
-      <div><strong>Dental Implants</strong><br><small>Natural-looking, stable replacements</small><br>Learn more →</div>
-    </a>
-    <a class="feature-card" href="invisible-aligners.html">
-      <div><strong>Invisible Aligners</strong><br><small>Clear trays for straighter teeth</small><br>Learn more →</div>
-    </a>
-  </section>
 
-  <!-- HIGH TECH -->
-  <section class="hightech">
-    <h2>Modern Care, Simple Approach</h2>
-    <p>At DentalVision2000, we use digital x-rays, high‑quality materials and strict sterilization — all while keeping treatments simple, clear and affordable for every family.</p>
-  </section>
+<!-- ════════════════════════
+     X-RAY
+════════════════════════ -->
+<div class="xray-section">
+  <div class="xray-inner">
+    <div class="xray-img">
+      <img src="xray.png" alt="Digital X-Ray" onerror="this.outerHTML='<div class=\'img-ph\'>🦷</div>'">
+    </div>
+    <div class="xray-text">
+      <h3>Digital X-Ray Diagnostics</h3>
+      <p>We use the latest digital radiography technology — delivering crystal-clear diagnostic images with far less radiation than traditional X-rays.</p>
+      <p>Early detection means simpler treatment. Dr. Furqan uses digital X-rays to identify problems early, saving you time, discomfort, and cost.</p>
+      <div class="xray-tag">⚡ Fast &nbsp;·&nbsp; Precise &nbsp;·&nbsp; Low Radiation</div>
+    </div>
+  </div>
+</div>
 
-  <!-- DOCTORS -->
-  <section class="doctors">
-    <h2>Meet the Doctors</h2><br>
-    <div class="doctor-grid">
-      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Furqan Ahmed</h3>
-        <p>Founder & Senior Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-furqan.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+<div class="stripe-divider"></div>
+
+
+<!-- ════════════════════════
+     TESTIMONIALS
+════════════════════════ -->
+<section id="testimonials">
+  <div class="section-header">
+    <h2>What Patients <span>Say</span></h2>
+    <p>Real stories from our happiest patients</p>
+  </div>
+  <div class="testimonials-row">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Dr. Furqan completely transformed my smile. The implants look so natural — I forget they're not my original teeth!"</blockquote>
+      <div class="author">Ahmed R.</div>
+      <div class="tag">Dental Implants</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Best whitening treatment I've ever had. The staff is warm and welcoming. Definitely a regular patient now!"</blockquote>
+      <div class="author">Sana K.</div>
+      <div class="tag">Teeth Whitening</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"I was terrified of root canals. Dr. Furqan made it completely painless. Absolutely changed my view of dentistry."</blockquote>
+      <div class="author">Fatima H.</div>
+      <div class="tag">Root Canal</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"My whole family comes here. The kids love it, the work is impeccable. Unmatched care in Karachi."</blockquote>
+      <div class="author">Bilal M.</div>
+      <div class="tag">Family Care</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Dr. Uzma's orthodontic work is incredible. My teeth are perfectly aligned now. Couldn't be happier!"</blockquote>
+      <div class="author">Zara T.</div>
+      <div class="tag">Orthodontics</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     TEAM
+════════════════════════ -->
+<section id="team">
+  <div class="section-header">
+    <h2>Meet Our <span>Doctors</span></h2>
+    <p>Expert hands dedicated to your perfect smile</p>
+  </div>
+  <div class="team-row">
+    <div class="doctor-card">
+      <div class="doctor-avatar">
+        👨‍⚕️
+        <div class="gum"></div>
       </div>
-
-      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Uzma Shaheen</h3>
-        <p>General Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-uzma.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+      <h3>Dr. Furqan</h3>
+      <div class="role">Owner &amp; Lead Dentist</div>
+      <div class="exp">Implantologist · 25+ Years</div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-avatar">
+        👩‍⚕️
+        <div class="gum"></div>
       </div>
+      <h3>Dr. Uzma</h3>
+      <div class="role">Orthodontist</div>
+      <div class="exp">Braces &amp; Clear Aligners Specialist</div>
+    </div>
+  </div>
+</section>
 
-      <div class="doctor-card" style="background-image:url('https://via.placeholder.com/600x800');">
-        
-        <h3>Dr. Fateh</h3>
-        <p>General Dentist</p>
-        <a class="btn btn-primary" style="position:relative; z-index:2;" href="doctor-fateh.html" style="margin-top:10px; display:inline-block;">View Profile</a>
+
+<!-- ════════════════════════
+     BOOKING FORM
+════════════════════════ -->
+<section id="booking">
+  <div class="section-header">
+    <h2>Book an <span>Appointment</span></h2>
+    <p>Fill in the tooth-shaped form and we'll confirm your visit shortly</p>
+  </div>
+  <div class="form-box">
+    <div id="formContent">
+      <!-- Firebase error banner -->
+      <div class="form-error" id="formError"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="Ahmed">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="Khan">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="03XX-XXXXXXX">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Service Required</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>General Check-up &amp; Cleaning</option>
+          <option>Teeth Whitening</option>
+          <option>Root Canal Treatment</option>
+          <option>Dental Implants</option>
+          <option>Orthodontics / Braces</option>
+          <option>Dental Crowns &amp; Veneers</option>
+          <option>Gum Treatment</option>
+          <option>Digital X-Ray</option>
+          <option>Emergency Dental Care</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" id="apptDate">
+      </div>
+      <div class="form-group">
+        <label>Additional Notes</label>
+        <textarea id="notes" placeholder="Any special concerns or questions..."></textarea>
+      </div>
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">🦷 Book My Appointment</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div class="tick">✅</div>
+      <h3>Appointment Booked!</h3>
+      <p>Thank you! We'll confirm your visit within 24 hours.<br>
+        Or call us: <strong><a href="tel:03212073839" style="color:var(--red);">0321-2073839</a></strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════
+     CONTACT + MAP
+════════════════════════ -->
+<section id="contact">
+  <div class="section-header">
+    <h2>Find <span>Us</span></h2>
+    <p>We'd love to hear from you — visit us or reach out anytime</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-list">
+      <div class="contact-item">
+        <div class="ci">📞</div>
+        <div>
+          <h4>Phone</h4>
+          <a href="tel:03212073839">0321-2073839</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci">✉️</div>
+        <div>
+          <h4>Email</h4>
+          <a href="/cdn-cgi/l/email-protection#e084858e94818c968993898f8ed2d0d0d0a0878d81898cce838f8d"><span class="__cf_email__" data-cfemail="c1a5a4afb5a0adb7a8b2a8aeaff3f1f1f181a6aca0a8adefa2aeac">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci">📍</div>
+        <div>
+          <h4>Location</h4>
+          <p>Karachi, Pakistan</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci">🕐</div>
+        <div>
+          <h4>Hours</h4>
+          <p>Monday – Saturday<br>9:00 AM – 8:00 PM</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci">👨‍⚕️</div>
+        <div>
+          <h4>Lead Doctor</h4>
+          <p>Dr. Furqan (Owner)<br>25+ Years of Excellence</p>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- SERVICES GRID -->
-  <section class="services">
-    <h2>Treatments We Offer</h2><br>
-    <div class="services-grid">
-      <div class="service-card"><div class="service-icon"></div><strong>Root Canal Treatment</strong><p>Precision cleaning, pain-free relief.</p><a href="root-canal.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Dental Implants</strong><p>Strong, natural-looking teeth.</p><a href="implants.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Invisible Aligners</strong><p>Clear and removable trays.</p><a href="invisible-aligners.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Scaling & Polishing</strong><p>Deep cleaning for fresh smiles.</p><a href="scaling.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Teeth Whitening</strong><p>Instant brightness boost.</p><a href="whitening.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Dental Fillings</strong><p>Fix cavities quickly.</p><a href="fillings.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Crowns & Bridges</strong><p>Restore teeth strength.</p><a href="crowns.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Gum Treatment</strong><p>Healthy gums, healthy smile.</p><a href="gum.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Full Mouth Rehabilitation</strong><p>Total dental restoration.</p><a href="full-mouth.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Emergency Dental Care</strong><p>Fast help for urgent cases.</p><a href="emergency.html">Learn more →</a></div>
-      <div class="service-card"><div class="service-icon"></div><strong>Pediatric Dentistry</strong><p>Gentle care for children.</p><a href="pediatric.html">Learn more →</a></div>
-    </div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section class="reviews">
-    <h2>What Our Patients Say</h2><br>
-    <!-- TODO: Replace with actual Google Reviews embed -->
-    <div class="review-card"><strong>★★★★★ — Ali</strong><p>Very professional and friendly staff. Highly recommended!</p><a href="#">View on Google →</a></div><br>
-    <div class="review-card"><strong>★★★★☆ — Sara</strong><p>The treatment was smooth and painless. Clean clinic environment.</p><a href="#">View on Google →</a></div><br>
-  </section>
-
-  <!-- LOCATION / MAP -->
-  <section class="location-section">
-    <div class="location-inner">
-      <div class="location-text">
-        <h2>Visit Our Clinic</h2>
-        <p class="location-desc">We are located in the heart of Federal B Area, with easy access and parking nearby. You can use the map to get directions directly to our clinic.</p>
-        <p class="location-name">DentalVision2000</p>
-        <p class="location-address">Plot R 1233, Federal B Area Block 15,<br>Gulberg Town, Karachi</p>
-        <p class="location-hours">Service Hours: Mon–Fri 11:00 AM – 9:00 PM · Saturday–Sunday Closed</p>
-        <div class="location-actions">
-          <a href="https://wa.me/923212073839" target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
-          <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" target="_blank" class="btn btn-secondary">Open in Google Maps</a>
-        </div>
-      </div>
-      <div class="location-map-wrapper">
-        <div class="location-map-inner">
-          <!-- Embedded Google Map -->
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
+    <!--
+      MAP — Paste your Google Maps iframe inside .map-box replacing the .map-ph div.
+      Example: <iframe src="https://www.google.com/maps/embed?pb=!1m18..." allowfullscreen loading="lazy"></iframe>
+    -->
+    <div class="map-box" id="mapContainer">
+      <div class="map-ph">
+        <div class="map-pin">📍</div>
+        <p>Paste your Google Maps<br><strong>iframe</strong> here</p>
+        <code>&lt;iframe src="..."&gt;&lt;/iframe&gt;</code>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ -->
-  <section class="faq">
-    <div class="faq-inner">
-      <h2>Frequently Asked Questions</h2>
-      <p class="faq-desc">Quick answers to the questions patients ask us most often.</p><br>
 
-      <div class="faq-item">
-        <div class="faq-header">
-          <span class="faq-question">Do I need an appointment or can I walk in?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>Appointments are recommended so we can reserve your slot, but walk-ins are accepted based on availability.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-header">
-          <span class="faq-question">Is treatment painful?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>Most treatments are very comfortable. We use modern anesthetics and gentle techniques to keep you relaxed.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-header">
-          <span class="faq-question">Do you treat children?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>Yes, we offer pediatric dentistry. Our team is used to treating children in a calm, friendly way.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-header">
-          <span class="faq-question">How can I book an appointment?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>You can message us on WhatsApp, call the clinic during service hours, or visit in person to book your slot.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-header">
-          <span class="faq-question">What if I have a dental emergency?</span>
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-answer">
-          <p>For emergencies, contact us on WhatsApp or call immediately. We will guide you and try to see you as soon as possible.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- FOOTER -->
+<!-- ════════════════════════
+     FOOTER
+════════════════════════ -->
 <footer>
+  <div class="footer-teeth" id="footerTeeth"></div>
   <div class="footer-grid">
-    <div class="footer-column">
-      <h4>DentalVision2000</h4>
-      <p>Plot R 1233, Federal B Area Block 15, Gulberg Town, Karachi</p><br>
-      <a href="tel:03212073839" style="color:#fff;">0321-2073839</a><br><br>
-      <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.201241636285!2d67.07406707531989!3d24.925213442663445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f9e493c7e99%3A0xc6e998a3b76e1f31!2sDental%20Vision%202000!5e0!3m2!1sen!2s!4v1763331030773!5m2!1sen!2s" style="color:#fff;" target="_blank">Open in Google Maps</a>
+    <div class="footer-brand">
+      <h3>Dental Vision <span>2000</span></h3>
+      <p>Your trusted dental partner in Karachi since 2000. Led by Dr. Furqan with 25+ years of expertise and genuine care.</p>
     </div>
-
-    <div class="footer-column">
+    <div class="footer-col">
       <h4>Services</h4>
-      <p><a href="root-canal.html">Root Canal</a></p>
-      <p><a href="implants.html">Dental Implants</a></p>
-      <p><a href="invisible-aligners.html">Invisible Aligners</a></p>
-      <p><a href="scaling.html">Scaling</a></p>
-      <p><a href="whitening.html">Whitening</a></p>
-      <p><a href="fillings.html">Fillings</a></p>
-      <p><a href="crowns.html">Crowns & Bridges</a></p>
-      <p><a href="gum.html">Gum Treatment</a></p>
-      <p><a href="full-mouth.html">Full Mouth Rehab</a></p>
-      <p><a href="emergency.html">Emergency Care</a></p>
-      <p><a href="pediatric.html">Pediatric Dentistry</a></p>
+      <ul>
+        <li><a href="#services">General Dentistry</a></li>
+        <li><a href="#services">Teeth Whitening</a></li>
+        <li><a href="#services">Root Canal</a></li>
+        <li><a href="#services">Implants</a></li>
+        <li><a href="#services">Orthodontics</a></li>
+        <li><a href="#services">Gum Therapy</a></li>
+      </ul>
     </div>
-
-    <div class="footer-column">
-      <h4>Service Hours</h4>
-      <p>Mon–Fri: 11:00 AM – 9:00 PM</p>
-      <p><strong>Sunday: CLOSED</strong></p>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">📍 Karachi, Pakistan</a></li>
+        <li><a href="tel:03212073839">📞 0321-2073839</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#d1b5b4bfa5b0bda7b8a2b8bebfe3e1e1e191b6bcb0b8bdffb2bebc">✉ <span class="__cf_email__" data-cfemail="6a0e0f041e0b061c0319030504585a5a5a2a0d070b030644090507">[email&#160;protected]</span></a></li>
+        <li><a href="#">🕐 Mon–Sat: 9am – 8pm</a></li>
+      </ul>
     </div>
   </div>
-
-  <div class="footer-bottom">© DentalVision2000. All rights reserved.</div>
+  <div class="footer-bottom">© 2024 Dental Vision 2000. All rights reserved. | Karachi, Pakistan</div>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/923212073839" target="_blank" class="wa-float">
-  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.5.8 4.9 2.1 6.9L4 29l7.3-2c1.9 1 4 1.6 6.6 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm6.7 17.5c-.3.9-1.7 1.7-2.4 1.8-.6.1-1.4.1-2.3-.1-.5-.1-1.2-.4-2-0.8-3.5-1.9-5.8-5.4-6-5.7-.2-.3-1.4-1.9-1.4-3.6 0-1.7.9-2.5 1.3-2.9.3-.3.7-.4 1-.4h.7c.2 0 .6-.1.9.7.3.9 1.1 2.9 1.2 3.1.1.2.1.4 0 .6-.1.3-.2.4-.4.6-.2.2-.5.6-.7.8-.2.2-.5.5-.2 1 0.3.5 1.3 2.2 2.9 3.5 2 1.8 3.6 2.4 4.2 2.7.6.3.9.2 1.2-.1.4-.5 1-1.3 1.3-1.7.3-.4.6-.4.9-.3s2.3 1.1 2.7 1.3c.4.2.7.3.8.5.1.2.1 1-.2 1.9z"/></svg>
+
+<!-- ════════════════════════
+     WHATSAPP FLOATING BUTTON
+════════════════════════ -->
+<a class="wa-btn"
+   href="https://wa.me/923212073839?text=Hello%20Dental%20Vision%202000%2C%20I%20would%20like%20to%20book%20an%20appointment."
+   target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
+  <div class="wa-tooth">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="16" fill="white"/>
+      <path d="M16 5C10.477 5 6 9.477 6 15C6 16.89 6.525 18.655 7.438 20.156L6.07 26L12.094 24.656C13.547 25.49 15.217 25.969 17 25.969C22.523 25.969 27 21.492 27 15.969C27 10.447 22.523 6 17 6L16 5Z" fill="#25D366"/>
+      <path d="M12.5 11C12.2 11 11.7 11.1 11.3 11.6C10.9 12.1 9.8 13.1 9.8 15.2C9.8 17.3 11.3 19.3 11.5 19.6C11.7 19.9 14.5 24.3 18.7 26C19.5 26.3 20.1 26.5 20.6 26.6C21.4 26.8 22.1 26.8 22.7 26.7C23.3 26.6 24.6 25.7 24.9 24.7C25.2 23.7 25.2 22.9 25.1 22.7C25 22.5 24.7 22.4 24.3 22.2C23.9 22 21.8 21 21.4 20.8C21 20.6 20.7 20.6 20.5 20.9C20.3 21.2 19.5 22.1 19.3 22.3C19.1 22.5 18.9 22.6 18.5 22.4C18.1 22.2 16.9 21.8 15.4 20.5C14.3 19.5 13.5 18.2 13.3 17.8C13.1 17.4 13.3 17.2 13.5 17C13.7 16.8 13.9 16.5 14.1 16.3C14.3 16.1 14.4 15.9 14.6 15.6C14.8 15.3 14.7 15.1 14.6 14.9C14.5 14.7 13.7 12.5 13.3 11.7C13 11 12.7 11 12.5 11Z" fill="white"/>
+    </svg>
+  </div>
+  <div class="wa-label-txt">💬 Chat with us</div>
 </a>
 
-<script>
-// MOBILE MENU
-const hamburger = document.getElementById('hamburger');
-const panel = document.getElementById('mobilePanel');
-if (hamburger && panel) {
-  hamburger.addEventListener('click', () => panel.classList.toggle('open'));
-  panel.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => panel.classList.remove('open'))
-  );
-  const mobileServiceGroup = panel.querySelector('.mobile-group');
-  const mobileParent = panel.querySelector('.mobile-parent');
-  if (mobileParent && mobileServiceGroup) {
-    mobileParent.addEventListener('click', (e) => {
-      e.stopPropagation();
-      mobileServiceGroup.classList.toggle('open');
-    });
-  }
-}
 
-// HERO ANIMATION
-const heroText = document.getElementById('heroText');
-const observer = new IntersectionObserver(entries => {
-  if(entries[0].isIntersecting) heroText.classList.add('animate');
-},{threshold:0.3});
-observer.observe(heroText);
+<!-- ════════════════════════
+     JAVASCRIPT
+════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
-// FAQ ACCORDION
-const faqItems = document.querySelectorAll('.faq-item');
-faqItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-
-    faqItems.forEach(i => {
-      i.classList.remove('open');
-      const answerEl = i.querySelector('.faq-answer');
-      if (answerEl) answerEl.style.maxHeight = null;
-    });
-
-    if (!isOpen) {
-      item.classList.add('open');
-      const answer = item.querySelector('.faq-answer');
-      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
+  /* ── LOADER ── */
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('loader').classList.add('hidden');
+    }, 1800);
   });
-});
+
+  /* ── HAMBURGER ── */
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+  function closeMobile() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  /* ── BUILD HERO TEETH BAR ── */
+  var teethBar = document.getElementById('teethBar');
+  var toothTypes = [
+    't t-m','t t-p','t t-c',
+    't t-i','t t-i','t t-i','t t-i',
+    't t-c','t t-p','t t-m'
+  ];
+  toothTypes.forEach(function(cls) {
+    var el = document.createElement('div');
+    el.className = cls;
+    teethBar.appendChild(el);
+  });
+
+  /* ── BUILD FOOTER TEETH ── */
+  var footerTeeth = document.getElementById('footerTeeth');
+  var footerTypes = ['t-m','t-p','t-c','t-i','t-i','t-c','t-p','t-m'];
+  footerTypes.forEach(function(tc) {
+    var el = document.createElement('div');
+    el.className = 't ft ' + tc;
+    footerTeeth.appendChild(el);
+  });
+
+  /* ── MARQUEE ── */
+  var marqueeItems = [
+    '🦷 General Dentistry','✨ Teeth Whitening','🔩 Root Canal',
+    '👑 Dental Crowns','🌱 Implants','🔧 Orthodontics',
+    '🩺 Gum Treatment','🔬 Digital X-Rays','😁 Veneers','🏆 25+ Years of Care'
+  ];
+  var inner = document.getElementById('marqueeInner');
+  var doubled = marqueeItems.concat(marqueeItems);
+  doubled.forEach(function(item) {
+    var span = document.createElement('span');
+    span.textContent = item;
+    inner.appendChild(span);
+  });
+
+  /* ── NAVBAR SHADOW ON SCROLL ── */
+  window.addEventListener('scroll', function() {
+    var nav = document.getElementById('navbar');
+    nav.style.boxShadow = window.scrollY > 10
+      ? '0 2px 14px rgba(0,0,0,0.12)'
+      : '0 2px 10px rgba(0,0,0,0.07)';
+  });
+
+  /* ── FORM SUBMIT WITH FIREBASE ── */
+
+  // ── Firebase SDK (via CDN compat build) ──
+  // Loaded via <script> tags at bottom of <body> — see below
+
+  var db; // will be set after Firebase loads
+
+  function initFirebase() {
+    var firebaseConfig = {
+      apiKey:            "AIzaSyA3o3f22U3bSCT1a4GNIxQ7Zxf-qOsa7RI",
+      authDomain:        "dentalvision2000-31559.firebaseapp.com",
+      projectId:         "dentalvision2000-31559",
+      storageBucket:     "dentalvision2000-31559.firebasestorage.app",
+      messagingSenderId: "114355083215",
+      appId:             "1:114355083215:web:e28c1871271ec26419e4ba",
+      measurementId:     "G-TYF43VWKDK"
+    };
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    // Analytics
+    firebase.analytics();
+    console.log("Firebase initialised ✅");
+  }
+
+  // ── Show / hide loading state on button ──
+  function setSubmitState(loading) {
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = loading;
+    btn.textContent = loading ? '⏳ Sending...' : '🦷 Book My Appointment';
+  }
+
+  // ── Show inline error banner ──
+  function showError(msg) {
+    var el = document.getElementById('formError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function clearError() {
+    var el = document.getElementById('formError');
+    el.textContent = '';
+    el.style.display = 'none';
+  }
+
+  // ── Main submit function ──
+  function submitForm() {
+    clearError();
+
+    var firstName = document.getElementById('firstName').value.trim();
+    var lastName  = document.getElementById('lastName').value.trim();
+    var phone     = document.getElementById('phone').value.trim();
+    var email     = document.getElementById('email').value.trim();
+    var service   = document.getElementById('service').value;
+    var apptDate  = document.getElementById('apptDate').value;
+    var notes     = document.getElementById('notes').value.trim();
+
+    // Basic validation
+    if (!firstName) { showError('Please enter your first name.'); return; }
+    if (!phone)      { showError('Please enter your phone number.'); return; }
+    if (!service)    { showError('Please select a service.'); return; }
+
+    var appointment = {
+      firstName:   firstName,
+      lastName:    lastName,
+      phone:       phone,
+      email:       email || null,
+      service:     service,
+      apptDate:    apptDate || null,
+      notes:       notes || null,
+      status:      'pending',
+      submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    setSubmitState(true);
+
+    db.collection('appointments')
+      .add(appointment)
+      .then(function(docRef) {
+        console.log('Appointment saved, ID:', docRef.id);
+        setSubmitState(false);
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('successMsg').style.display  = 'block';
+      })
+      .catch(function(error) {
+        console.error('Firebase error:', error);
+        setSubmitState(false);
+        showError('Something went wrong. Please try again or call us at 0321-2073839.');
+      });
+  }
+
+</script>
+
+<!--
+  ══════════════════════════════════════════════════════
+  Firebase SDKs — compat build (no bundler needed)
+  Loaded at the very bottom for best performance
+  ══════════════════════════════════════════════════════
+-->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
+<script>
+  // Initialise Firebase after the SDKs are loaded
+  initFirebase();
 </script>
 
 </body>
